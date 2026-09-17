@@ -1376,23 +1376,39 @@ textarea.form-control {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.85);
+  /* The caption scrim now supplies the text contrast, so the photo itself no
+     longer needs to be dimmed as heavily. */
+  filter: brightness(0.94);
 }
 
+/* Caption sits on a gradient scrim rather than a solid card, so the photo stays
+   visible behind it. The scrim is opaque only where the text actually is and
+   fades to nothing well before the middle of the frame, which is where faces
+   in these group shots sit. */
 .slide-content {
   position: absolute;
-  left: 28px;
-  bottom: 26px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 2;
-  width: min(700px, calc(100% - 56px));
-  padding: 24px 28px;
+  width: 100%;
+  padding: 88px 32px 26px;
   text-align: left;
-  border-radius: var(--radius-lg);
-  background: rgba(15, 23, 42, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(
+    to top,
+    rgba(8, 13, 25, 0.94) 0%,
+    rgba(8, 13, 25, 0.82) 30%,
+    rgba(8, 13, 25, 0.45) 62%,
+    rgba(8, 13, 25, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Keep the link underneath clickable through the scrim */
+.slide-content > * {
+  pointer-events: auto;
+  max-width: 760px;
 }
 
 .slide-tag {
@@ -2020,10 +2036,10 @@ textarea.form-control {
 
 .site-footer {
   position: relative;
-  margin-top: 80px;
+  margin-top: 56px;
   background: #0f172a;
   border-top: 1px solid #1e293b;
-  padding: 60px 0 32px;
+  padding: 44px 0 20px;
   color: #94a3b8;
   transition: background var(--transition-base), color var(--transition-base);
 }
@@ -2041,15 +2057,15 @@ textarea.form-control {
 
 .site-footer .footer-inner {
   display: grid;
-  grid-template-columns: 1.3fr 0.8fr 0.85fr 1.15fr;
-  gap: 36px;
+  grid-template-columns: 1.1fr 1.2fr 0.85fr 0.95fr;
+  gap: 28px 32px;
   align-items: start;
 }
 
 .footer-brand {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .footer-brand-logo-link {
@@ -2091,9 +2107,9 @@ textarea.form-control {
 }
 
 .footer-title {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   font-family: var(--font-display);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: #f8fafc;
   letter-spacing: 0.06em;
@@ -2107,10 +2123,18 @@ textarea.form-control {
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 8px;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+/* The Navigation column carries eight links, which otherwise sets the height of
+   the whole footer. Two columns halves it and balances the row. */
+.footer-links-2col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
 }
 
 .footer-links a {
@@ -2136,7 +2160,7 @@ textarea.form-control {
 }
 
 .footer-links li.footer-social-first {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 /* Social Pills in Footer */
@@ -2144,16 +2168,16 @@ textarea.form-control {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: var(--radius-full);
-  font-size: 0.84rem;
+  font-size: var(--text-base);
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
   background: #1e293b;
   border: 1px solid #334155;
   color: #cbd5e1;
   transition: all var(--transition-fast);
-  margin-bottom: 6px;
 }
 
 .footer-social-pill:hover {
@@ -2168,8 +2192,8 @@ textarea.form-control {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 14px;
-  padding: 9px 18px;
+  margin-top: 12px;
+  padding: 8px 16px;
   border-radius: var(--radius-full);
   background: rgba(234, 88, 12, 0.12);
   border: 1px solid rgba(234, 88, 12, 0.32);
@@ -2191,7 +2215,7 @@ textarea.form-control {
 
 .map-block {
   width: 100%;
-  min-height: 170px;
+  min-height: 148px;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid #334155;
@@ -2201,15 +2225,15 @@ textarea.form-control {
 .map-block iframe {
   width: 100%;
   height: 100%;
-  min-height: 170px;
+  min-height: 148px;
   border: 0;
   display: block;
 }
 
 .footer-copy {
   grid-column: 1 / -1;
-  padding-top: 24px;
-  margin-top: 28px;
+  padding-top: 18px;
+  margin-top: 20px;
   border-top: 1px solid #1e293b;
   color: #94a3b8;
   font-size: 0.875rem;
@@ -2717,10 +2741,7 @@ textarea.form-control {
   }
 
   .slide-content {
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
-    padding: 16px;
+    padding: 64px 18px 18px;
   }
 
   .carousel-control {
