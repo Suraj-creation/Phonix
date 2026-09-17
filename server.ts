@@ -5,6 +5,7 @@ import fs from "fs";
 import crypto from "crypto";
 import { DatabaseSync } from "node:sqlite";
 import ExcelJS from "exceljs";
+import * as sheetsSync from "./sheetsSync.js";
 
 const app = express();
 const PORT = 3000;
@@ -677,26 +678,33 @@ app.post("/api/register", (req, res) => {
     req.ip || "127.0.0.1"
   );
 
+  const registration = {
+    id: regId,
+    reg_code: regCode,
+    full_name: fullName,
+    enrollment_id: enrollmentId,
+    department,
+    academic_year: academicYear,
+    email,
+    phone,
+    event_name: event.title,
+    event_date: event.event_date,
+    event_time: event.event_time,
+    venue: event.venue,
+    status: "confirmed",
+    attendance_status: "pending",
+    payment_status: "free",
+    created_at: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+  };
+
+  // Mirror to the club Google Sheet. Fire-and-forget; SQLite above is the
+  // source of truth and a Sheets outage can never fail a registration.
+  sheetsSync.pushAsync(sheetsSync.buildPayload(registration, event, additionalInfo));
+
   res.status(201).json({
     success: true,
     message: "Registration completed successfully!",
-    registration: {
-      id: regId,
-      reg_code: regCode,
-      full_name: fullName,
-      enrollment_id: enrollmentId,
-      department,
-      academic_year: academicYear,
-      email,
-      phone,
-      event_name: event.title,
-      event_date: event.event_date,
-      event_time: event.event_time,
-      venue: event.venue,
-      status: "confirmed",
-      attendance_status: "pending",
-      created_at: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
-    }
+    registration
   });
 });
 

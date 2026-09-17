@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="phoenix-club-logo.png" />
+  <link rel="apple-touch-icon" href="phoenix-club-logo.png" />
   <title>About Us — Phoenix Club | Navrachana University</title>
   <meta name="description" content="Learn about the origin, mission, core values, and community impact of Phoenix Club at Navrachana University." />
 
@@ -13,7 +15,8 @@
 
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Specific timeline & about enhancements */
+    /* About page specifics only.
+       Card surfaces, buttons and type scale come from styles.css. */
     .about-intro-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
@@ -42,17 +45,15 @@
     .info-item-box {
       padding: 16px;
       border-radius: var(--radius-md);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-subtle);
     }
     .info-item-box strong {
       display: block;
-      color: var(--flame-600);
-      font-size: 0.95rem;
+      color: var(--accent-text);
+      font-size: var(--text-md);
       margin-bottom: 4px;
     }
     .info-item-box span {
-      font-size: 0.86rem;
+      font-size: var(--text-base);
       color: var(--ink-600);
       line-height: 1.5;
       display: block;
@@ -66,22 +67,13 @@
     .mission-card {
       padding: 36px 30px;
       border-radius: var(--radius-xl);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-sm);
-      transition: all var(--transition-base);
-    }
-    .mission-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--border-hover);
     }
     .mission-card .icon-box {
       width: 48px;
       height: 48px;
       border-radius: var(--radius-md);
       background: rgba(234, 88, 12, 0.1);
-      color: var(--flame-600);
+      color: var(--accent-text);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,17 +87,7 @@
     }
     .value-card {
       padding: 26px 20px;
-      border-radius: var(--radius-lg);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-sm);
-      transition: all var(--transition-base);
       text-align: center;
-    }
-    .value-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--border-hover);
-      box-shadow: var(--shadow-md);
     }
     .value-card .value-icon {
       width: 44px;
@@ -113,19 +95,20 @@
       margin: 0 auto 14px;
       border-radius: var(--radius-md);
       background: rgba(234, 88, 12, 0.08);
-      color: var(--flame-600);
+      color: var(--accent-text);
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .value-card h3 {
-      font-size: 1.2rem;
+      font-size: var(--text-3xl);
       margin-bottom: 8px;
     }
     .value-card p {
-      font-size: 0.88rem;
+      font-size: var(--text-base);
       line-height: 1.6;
     }
+
     /* Timeline */
     .timeline-container {
       position: relative;
@@ -163,7 +146,7 @@
       height: 14px;
       border-radius: 50%;
       background: var(--flame-500);
-      border: 3px solid #ffffff;
+      border: 3px solid var(--bg-page);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
     }
     .timeline-item:nth-child(odd) .timeline-dot {
@@ -174,28 +157,26 @@
     }
     .timeline-card {
       padding: 22px 24px;
-      background: var(--bg-surface);
       border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-sm);
     }
     .timeline-year {
-      font-size: 0.78rem;
+      font-size: var(--text-xs);
       font-weight: 800;
-      color: var(--flame-600);
+      color: var(--accent-text);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 6px;
       display: inline-block;
     }
     .timeline-card h3 {
-      font-size: 1.15rem;
+      font-size: var(--text-2xl);
       margin-bottom: 6px;
     }
     .timeline-card p {
-      font-size: 0.9rem;
+      font-size: var(--text-md);
       line-height: 1.6;
     }
+
     /* Year selector cards */
     .year-selector-grid {
       display: grid;
@@ -205,38 +186,25 @@
     }
     .year-link-card {
       padding: 22px 18px;
-      border-radius: var(--radius-lg);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
       text-align: center;
-      transition: all var(--transition-fast);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
     }
-    .year-link-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--flame-500);
-      box-shadow: var(--shadow-md);
-    }
     .year-link-card .num {
-      font-size: 1.6rem;
+      font-family: var(--font-display);
+      font-size: var(--text-display-sm);
       font-weight: 800;
       color: var(--ink-900);
     }
     .year-link-card .tag {
-      font-size: 0.78rem;
+      font-size: var(--text-xs);
       font-weight: 700;
-      color: var(--flame-600);
+      color: var(--accent-text);
       text-transform: uppercase;
     }
-    .year-link-card .btn-link {
-      margin-top: 4px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--crimson-600);
-    }
+
     @media (max-width: 900px) {
       .about-intro-grid, .mission-grid {
         grid-template-columns: 1fr;
@@ -249,17 +217,23 @@
       }
       .timeline-item {
         width: 100%;
-        left: 0 !important;
-        text-align: left !important;
+        left: 0;
+        text-align: left;
         padding-left: 48px;
         padding-right: 16px;
       }
-      .timeline-item .timeline-dot {
-        left: 13px !important;
-        right: auto !important;
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        left: 0;
+        text-align: left;
+      }
+      .timeline-item:nth-child(odd) .timeline-dot,
+      .timeline-item:nth-child(even) .timeline-dot {
+        left: 13px;
+        right: auto;
       }
     }
-    @media (max-width: 580px) {
+    @media (max-width: 480px) {
       .values-grid, .year-selector-grid, .info-list-grid {
         grid-template-columns: 1fr;
       }
@@ -267,6 +241,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
   <!-- ==========================================================================
        Navigation Bar
@@ -337,7 +312,7 @@
   <!-- ==========================================================================
        Page Hero
        ========================================================================== -->
-  <main class="container">
+  <main id="main" class="container">
     <section class="page-hero">
       <div class="page-hero-inner reveal">
         <div class="page-hero-copy">
@@ -359,12 +334,12 @@
     <!-- ==========================================================================
          Introduction Section
          ========================================================================== -->
-    <section class="reveal" style="padding: 40px 0;">
+    <section class="reveal section-pad">
       <div class="about-intro-grid">
         <div>
           <span class="eyebrow">Who We Are</span>
-          <h2 style="font-size: clamp(1.9rem, 2.8vw, 2.5rem); margin-bottom: 16px;">A student-driven platform for growth and collaboration</h2>
-          <p style="font-size: 1.02rem; line-height: 1.75; color: var(--ink-600);">
+          <h2 class="h-display-xl">A student-driven platform for growth and collaboration</h2>
+          <p class="lead">
             We are dedicated to bridging academic concepts with hands-on application. Through interactive workshops, community outreach campaigns, distinguished speaker sessions, and annual student-led festivals, Phoenix Club provides members with the freedom to experiment and lead.
           </p>
 
@@ -397,7 +372,7 @@
     <!-- ==========================================================================
          Vision & Mission
          ========================================================================== -->
-    <section class="reveal" style="padding: 40px 0;">
+    <section class="reveal section-pad">
       <div class="section-heading">
         <span class="section-tag">Vision &amp; Mission</span>
         <h2>Purpose-driven growth for every learner</h2>
@@ -409,8 +384,8 @@
           <div class="icon-box" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
           </div>
-          <h3 style="font-size: 1.4rem; margin-bottom: 10px;">Our Vision</h3>
-          <p style="font-size: 1rem; line-height: 1.7; color: var(--ink-600);">
+          <h3 class="h-display-sm">Our Vision</h3>
+          <p class="body-lg">
             To establish Phoenix Club as a premier interdisciplinary student community that empowers individuals to realize their creative and scientific potential, connect with inspiring mentors, and lead positive change within Navrachana University and beyond.
           </p>
         </article>
@@ -419,8 +394,8 @@
           <div class="icon-box" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
           </div>
-          <h3 style="font-size: 1.4rem; margin-bottom: 10px;">Our Mission</h3>
-          <p style="font-size: 1rem; line-height: 1.7; color: var(--ink-600);">
+          <h3 class="h-display-sm">Our Mission</h3>
+          <p class="body-lg">
             To cultivate leadership, curiosity, and scientific innovation through hands-on learning experiences, multidisciplinary teamwork, mentorship drives, and community-building programs that support students academically, socially, and professionally.
           </p>
         </article>
@@ -430,7 +405,7 @@
     <!-- ==========================================================================
          Core Values
          ========================================================================== -->
-    <section class="reveal" style="padding: 40px 0;">
+    <section class="reveal section-pad">
       <div class="section-heading">
         <span class="section-tag">Guiding Principles</span>
         <h2>What guides every Phoenix Club initiative</h2>
@@ -474,7 +449,7 @@
     <!-- ==========================================================================
          Timeline Section
          ========================================================================== -->
-    <section class="reveal" style="padding: 40px 0;">
+    <section class="reveal section-pad">
       <div class="section-heading">
         <span class="section-tag">Milestones</span>
         <h2>Our journey so far</h2>
@@ -520,14 +495,14 @@
       </div>
 
       <!-- Past leadership link cards (Only 2024, 2025, 2026) -->
-      <div style="margin-top: 50px;">
+      <div class="section-gap">
         <div class="section-heading">
           <span class="section-tag">Alumni Legacy</span>
           <h2>Explore previous year leadership</h2>
           <p>Meet the past executive teams who shaped each milestone in our journey.</p>
         </div>
 
-        <div class="year-selector-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 800px; margin-left: auto; margin-right: auto;">
+        <div class="year-selector-grid grid-3-narrow">
           <a href="past-members.html" class="year-link-card">
             <span class="num">2024</span>
             <span class="tag">Growth Executive</span>
@@ -588,7 +563,7 @@
         <li><a href="upcoming-events.html">&#8250; Upcoming Events</a></li>
         <li><a href="past-events.html">&#8250; Gallery &amp; Highlights</a></li>
         <li><a href="past-members.html">&#8250; Alumni &amp; Past Members</a></li>
-        <li><a href="registration.html" style="color: #ea580c; font-weight: 800;">&#8250; Student Registration</a></li>
+        <li><a href="registration.html" class="footer-link-highlight">&#8250; Student Registration</a></li>
       </ul>
     </div>
 
@@ -597,7 +572,7 @@
       <ul class="footer-links">
         <li><a href="sponsorships.html">&#8250; Sponsorship Packages</a></li>
         <li><a href="contact.html">&#8250; Contact Desk</a></li>
-        <li style="margin-top: 6px;">
+        <li class="footer-social-first">
           <a href="https://www.instagram.com" target="_blank" rel="noreferrer" class="footer-social-pill insta">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             Instagram @phoenixclub

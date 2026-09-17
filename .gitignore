@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 phoenix.zip
+
+# Queued Google Sheets pushes — contains student names, emails and phone
+# numbers, so it must never be committed.
+sheets_sync_failed.jsonl

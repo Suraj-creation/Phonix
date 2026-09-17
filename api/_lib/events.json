@@ -1,0 +1,93 @@
+[
+  {
+    "id": "EVT-INVESTITURE-2026",
+    "title": "Investiture Ceremony 2026",
+    "category": "Flagship Ceremony",
+    "description": "Official induction of student leadership council and badge pinning ceremony.",
+    "event_date": "2026-09-16",
+    "event_time": "10:00 AM",
+    "venue": "NUV Main Auditorium",
+    "capacity": 250,
+    "is_active": true,
+    "reg_open_date": "2026-08-01",
+    "reg_close_date": "2026-09-16"
+  },
+  {
+    "id": "EVT-WILDLIFE-2026",
+    "title": "Wildlife Week Celebration 2026",
+    "category": "Awareness Drive",
+    "description": "Biodiversity photo exhibition, wildlife quiz, documentary screening and nature trek.",
+    "event_date": "2026-09-19",
+    "event_time": "11:30 AM",
+    "venue": "Central Courtyard & Amphitheatre",
+    "capacity": 300,
+    "is_active": true,
+    "reg_open_date": "2026-08-15",
+    "reg_close_date": "2026-09-19"
+  },
+  {
+    "id": "EVT-GUEST-LECTURE-2026",
+    "title": "Distinguished Guest Lecture: Modern Biotechnology",
+    "category": "Guest Lecture",
+    "description": "Keynote address by renowned visiting bio-scientist on CRISPR gene editing and ethical research.",
+    "event_date": "2026-09-22",
+    "event_time": "02:30 PM",
+    "venue": "Seminar Hall A",
+    "capacity": 120,
+    "is_active": true,
+    "reg_open_date": "2026-08-20",
+    "reg_close_date": "2026-09-22"
+  },
+  {
+    "id": "EVT-WORKSHOP-SCIENCE-2026",
+    "title": "Science & Innovation Hands-On Workshop",
+    "category": "Workshop",
+    "description": "Interactive hardware interfacing, IoT sensor nodes, and scientific modeling laboratory.",
+    "event_date": "2026-09-26",
+    "event_time": "09:30 AM",
+    "venue": "Innovation Lab 2",
+    "capacity": 60,
+    "is_active": true,
+    "reg_open_date": "2026-08-25",
+    "reg_close_date": "2026-09-25"
+  },
+  {
+    "id": "EVT-TEACHERS-DAY-2026",
+    "title": "Teacher's Day Celebration & Felicitation",
+    "category": "Community Celebration",
+    "description": "Honoring dedicated university professors, mentors, and academic guides.",
+    "event_date": "2026-09-05",
+    "event_time": "02:00 PM",
+    "venue": "Multi-Purpose Hall",
+    "capacity": 150,
+    "is_active": true,
+    "reg_open_date": "2026-08-10",
+    "reg_close_date": "2026-09-05"
+  },
+  {
+    "id": "EVT-MIXER-2026",
+    "title": "Phoenix Community Mixer & Orientation",
+    "category": "Student Networking",
+    "description": "Welcoming freshers, interdisciplinary networking, and club orientation.",
+    "event_date": "2026-09-28",
+    "event_time": "04:00 PM",
+    "venue": "Student Center Lounge",
+    "capacity": 180,
+    "is_active": true,
+    "reg_open_date": "2026-09-01",
+    "reg_close_date": "2026-09-28"
+  },
+  {
+    "id": "EVT-MEMBERSHIP-2026",
+    "title": "Annual General Club Membership 2026",
+    "category": "All-Access Pass",
+    "description": "Year-round all-access membership pass to all Phoenix Club initiatives, workshops, and perks.",
+    "event_date": "2026-10-31",
+    "event_time": "11:59 PM",
+    "venue": "Navrachana University Campus",
+    "capacity": 500,
+    "is_active": true,
+    "reg_open_date": "2026-08-01",
+    "reg_close_date": "2026-10-31"
+  }
+]

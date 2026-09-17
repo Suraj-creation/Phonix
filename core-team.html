@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="phoenix-club-logo.png" />
+  <link rel="apple-touch-icon" href="phoenix-club-logo.png" />
   <title>Core Team — Phoenix Club | Navrachana University</title>
   <meta name="description" content="Meet the passionate student leaders and department heads driving Phoenix Club initiatives at Navrachana University." />
 
@@ -14,6 +16,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
   <!-- ==========================================================================
        Navigation Bar
@@ -84,7 +87,7 @@
   <!-- ==========================================================================
        Page Hero
        ========================================================================== -->
-  <main class="container team-page">
+  <main id="main" class="container team-page">
     <section class="page-hero">
       <div class="page-hero-inner reveal">
         <div class="page-hero-copy">
@@ -245,14 +248,14 @@
     <!-- ==========================================================================
          1. Outreach Team (Palak Gill, Afiya Gohel)
          ========================================================================== -->
-    <section class="team-section dept-section" data-dept="outreach" aria-labelledby="outreach-title" style="margin-top: 50px;">
+    <section class="team-section dept-section section-gap" data-dept="outreach" aria-labelledby="outreach-title">
       <div class="section-heading reveal">
         <span class="section-tag">Outreach</span>
         <h2 id="outreach-title">Outreach Team</h2>
         <p>Connecting Phoenix Club with students across departments, external partners, and campus networks.</p>
       </div>
 
-      <div class="team-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin-left: auto; margin-right: auto;">
+      <div class="team-grid grid-2-narrow">
         <!-- Palak Gill -->
         <article class="team-card reveal" data-category="outreach">
           <div class="member-photo">
@@ -294,14 +297,14 @@
     <!-- ==========================================================================
          2. Decoration Team (Radhika, Chandravali, Krishna, Vani)
          ========================================================================== -->
-    <section class="team-section dept-section" data-dept="decoration" aria-labelledby="decoration-title" style="margin-top: 50px;">
+    <section class="team-section dept-section section-gap" data-dept="decoration" aria-labelledby="decoration-title">
       <div class="section-heading reveal">
         <span class="section-tag">Decoration &amp; Aesthetics</span>
         <h2 id="decoration-title">Decoration Team</h2>
         <p>Creating immersive campus atmospheres, stage environments, and visual setups for every celebration.</p>
       </div>
 
-      <div class="team-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      <div class="team-grid grid-auto-fit">
         <!-- Radhika Bhalala -->
         <article class="team-card reveal" data-category="decoration">
           <div class="member-photo">
@@ -359,14 +362,14 @@
     <!-- ==========================================================================
          3. Media Team (Drashti, Khadija, Pushti, Vidhi)
          ========================================================================== -->
-    <section class="team-section dept-section" data-dept="media" aria-labelledby="media-title" style="margin-top: 50px;">
+    <section class="team-section dept-section section-gap" data-dept="media" aria-labelledby="media-title">
       <div class="section-heading reveal">
         <span class="section-tag">Media &amp; Design</span>
         <h2 id="media-title">Media Team</h2>
         <p>Curating storytelling, brand identity, graphic posters, photography, and social channels.</p>
       </div>
 
-      <div class="team-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      <div class="team-grid grid-auto-fit">
         <!-- Drashti Patel -->
         <article class="team-card reveal" data-category="media">
           <div class="member-photo">
@@ -424,14 +427,14 @@
     <!-- ==========================================================================
          4. Technical Team (Aditya, Shreya)
          ========================================================================== -->
-    <section class="team-section dept-section" data-dept="tech" aria-labelledby="tech-title" style="margin-top: 50px;">
+    <section class="team-section dept-section section-gap" data-dept="tech" aria-labelledby="tech-title">
       <div class="section-heading reveal">
         <span class="section-tag">Technical Systems</span>
         <h2 id="tech-title">Technical Team</h2>
         <p>Developing website features, managing digital registration workflows, and audio/visual infrastructure.</p>
       </div>
 
-      <div class="team-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin-left: auto; margin-right: auto;">
+      <div class="team-grid grid-2-narrow">
         <!-- Aditya Nath -->
         <article class="team-card reveal" data-category="tech">
           <div class="member-photo">
@@ -511,7 +514,7 @@
         <li><a href="upcoming-events.html">&#8250; Upcoming Events</a></li>
         <li><a href="past-events.html">&#8250; Gallery &amp; Highlights</a></li>
         <li><a href="past-members.html">&#8250; Alumni &amp; Past Members</a></li>
-        <li><a href="registration.html" style="color: #ea580c; font-weight: 800;">&#8250; Student Registration</a></li>
+        <li><a href="registration.html" class="footer-link-highlight">&#8250; Student Registration</a></li>
       </ul>
     </div>
 
@@ -520,7 +523,7 @@
       <ul class="footer-links">
         <li><a href="sponsorships.html">&#8250; Sponsorship Packages</a></li>
         <li><a href="contact.html">&#8250; Contact Desk</a></li>
-        <li style="margin-top: 6px;">
+        <li class="footer-social-first">
           <a href="https://www.instagram.com" target="_blank" rel="noreferrer" class="footer-social-pill insta">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             Instagram @phoenixclub

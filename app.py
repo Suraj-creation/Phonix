@@ -19,6 +19,7 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
 import db
+import sheets_sync
 from auth import login_required, role_required, get_current_admin, log_activity
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -244,26 +245,35 @@ def submit_public_registration():
     conn.commit()
     conn.close()
 
+    registration = {
+        "id": reg_id,
+        "reg_code": reg_code,
+        "full_name": full_name,
+        "enrollment_id": enrollment_id,
+        "department": department,
+        "academic_year": academic_year,
+        "email": email,
+        "phone": phone,
+        "event_name": event["title"],
+        "event_date": event["event_date"],
+        "event_time": event["event_time"],
+        "venue": event["venue"],
+        "status": "confirmed",
+        "attendance_status": "pending",
+        "payment_status": "free",
+        "created_at": datetime.now().strftime("%d %b %Y, %I:%M %p")
+    }
+
+    # Mirror to the club Google Sheet. Runs off-thread and can never fail the
+    # registration — SQLite above is the source of truth.
+    sheets_sync.push_async(
+        sheets_sync.build_payload(registration, event, additional_info)
+    )
+
     return jsonify({
         "success": True,
         "message": "Registration completed successfully!",
-        "registration": {
-            "id": reg_id,
-            "reg_code": reg_code,
-            "full_name": full_name,
-            "enrollment_id": enrollment_id,
-            "department": department,
-            "academic_year": academic_year,
-            "email": email,
-            "phone": phone,
-            "event_name": event["title"],
-            "event_date": event["event_date"],
-            "event_time": event["event_time"],
-            "venue": event["venue"],
-            "status": "confirmed",
-            "attendance_status": "pending",
-            "created_at": datetime.now().strftime("%d %b %Y, %I:%M %p")
-        }
+        "registration": registration
     }), 201
 
 
