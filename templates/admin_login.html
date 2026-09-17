@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal Login — Phoenix Club | Navrachana University</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    :root {
+      --admin-bg: #090d16;
+      --admin-card: #111827;
+      --admin-border: rgba(255, 255, 255, 0.08);
+      --admin-input: #19233c;
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(at 50% 10%, rgba(234, 88, 12, 0.08) 0px, transparent 65%),
+                  linear-gradient(180deg, #090d16 0%, #05070d 100%);
+      font-family: var(--font-body);
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 440px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .login-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #ea580c;
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-header img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 5px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      margin-bottom: 12px;
+    }
+
+    .brand-header h1 {
+      margin: 0 0 6px;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #f8fafc;
+    }
+
+    .brand-header p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #94a3b8;
+    }
+
+    .badge-portal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(234, 88, 12, 0.12);
+      border: 1px solid rgba(234, 88, 12, 0.3);
+      color: #fb923c;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--font-display);
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .form-control {
+      width: 100%;
+      background: var(--admin-input);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #ea580c;
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+    }
+
+    .toggle-password:hover {
+      color: #ffffff;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px 26px; /* 1:2 ratio */
+      border-radius: 8px;
+      background: #ea580c;
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+      margin-top: 8px;
+    }
+
+    .btn-login:hover {
+      background: #c2410c;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert.error {
+      display: flex;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+    }
+
+    .alert.success {
+      display: flex;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #86efac;
+    }
+
+    /* Quick demo credentials box */
+    .demo-credentials {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      font-size: 0.82rem;
+    }
+
+    .demo-credentials-title {
+      font-weight: 800;
+      color: #fb923c;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .demo-role-pills {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .demo-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #cbd5e1;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.18s;
+    }
+
+    .demo-pill:hover {
+      background: #f97316;
+      color: #fff;
+      border-color: #f97316;
+    }
+
+    .auth-footer-links {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+    }
+
+    .auth-footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .auth-footer-links a:hover {
+      color: #fb923c;
+    }
+
+    /* Forgot Password Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 20px;
+      max-width: 440px;
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h3 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      color: #fff;
+    }
+
+    .modal-content p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .btn-close-modal {
+      padding: 10px 24px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="brand-header">
+        <img src="/phoenix-club-logo.png" alt="Phoenix Club emblem" />
+        <div>
+          <span class="badge-portal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:5px; vertical-align: -1px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Protected Admin Access</span>
+        </div>
+        <h1>Phoenix Club Portal</h1>
+        <p>Navrachana University &bull; Executive Council</p>
+      </div>
+
+      <div id="loginAlert" class="alert error">
+        <span id="alertMessage">Invalid username or password.</span>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label for="username">Username or University Email</label>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            placeholder="e.g. admin or admin@phoenixnuv.ac.in"
+            required
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              placeholder="Enter your security password"
+              required
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              onclick="togglePasswordVisibility()"
+              aria-label="Toggle password visibility"
+              id="togglePasswordBtn"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          Authenticate &amp; Open Dashboard &rarr;
+        </button>
+      </form>
+
+      <!-- Demo Quick-Fill Roles (Requirement 1, 23 & 26) -->
+      <div class="demo-credentials">
+        <div class="demo-credentials-title">
+          <span style="display:inline-flex; align-items:center; gap:5px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+            Default Accounts Quick-Fill:
+          </span>
+        </div>
+        <div class="demo-role-pills">
+          <button type="button" class="demo-pill" onclick="fillCredentials('admin', 'Admin@Phoenix2026')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px; vertical-align:-1px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Super Admin
+          </button>
+          <button type="button" class="demo-pill" onclick="fillCredentials('phoenix_lead', 'Lead@Phoenix2026')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px; vertical-align:-1px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>Admin (Lead)
+          </button>
+          <button type="button" class="demo-pill" onclick="fillCredentials('faculty_viewer', 'Viewer@Phoenix2026')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px; vertical-align:-1px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>Viewer (Auditor)
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-footer-links">
+        <a href="/" title="Return to public website">&larr; Back to Phoenix Club</a>
+        <a href="#" onclick="openForgotPasswordModal(event)">Forgot Password?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgotModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: center; margin-bottom: 14px;">
+        <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(249, 115, 22, 0.12); display: flex; align-items: center; justify-content: center; color: var(--flame-500, #f97316);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+      </div>
+      <h3>Account Recovery &amp; Reset</h3>
+      <p>
+        Administrative passwords can be reset directly by the university's <strong>Super Admin</strong> from the <em>Admin Settings</em> section of the dashboard, or via terminal password rotation on the server.
+      </p>
+      <p style="font-size: 0.82rem; color: #fb923c;">
+        For emergency password reset, contact: <a href="mailto:phoenixclub@nuv.ac.in" style="color: #fb923c;">phoenixclub@nuv.ac.in</a>
+      </p>
+      <button type="button" class="btn-close-modal" onclick="closeForgotPasswordModal()">Understood</button>
+    </div>
+  </div>
+
+  <script>
+    function togglePasswordVisibility() {
+      const passInput = document.getElementById('password');
+      const btn = document.getElementById('togglePasswordBtn');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+      } else {
+        passInput.type = 'password';
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+      }
+    }
+
+    function fillCredentials(username, pass) {
+      document.getElementById('username').value = username;
+      document.getElementById('password').value = pass;
+    }
+
+    function openForgotPasswordModal(e) {
+      e.preventDefault();
+      document.getElementById('forgotModal').classList.add('active');
+    }
+
+    function closeForgotPasswordModal() {
+      document.getElementById('forgotModal').classList.remove('active');
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const alertBox = document.getElementById('loginAlert');
+      const alertMsg = document.getElementById('alertMessage');
+      const btn = document.getElementById('loginBtn');
+
+      alertBox.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Verifying credentials...';
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          alertBox.style.display = 'flex';
+          alertBox.className = 'alert error';
+          alertMsg.textContent = data.error || 'Authentication failed. Please check credentials.';
+          btn.disabled = false;
+          btn.textContent = 'Authenticate & Open Dashboard \u2192';
+          return;
+        }
+
+        // Success: redirect to dashboard
+        btn.textContent = 'Success! Redirecting...';
+        btn.style.background = '#10b981';
+        window.location.href = '/admin/dashboard';
+      } catch (err) {
+        alertBox.style.display = 'flex';
+        alertBox.className = 'alert error';
+        alertMsg.textContent = 'Network or server connection error. Please try again.';
+        btn.disabled = false;
+        btn.textContent = 'Authenticate & Open Dashboard \u2192';
+      }
+    }
+  </script>
+</body>
+</html>

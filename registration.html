@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Registration — Phoenix Club | Navrachana University</title>
+  <meta name="description" content="Register for Phoenix Club membership, flagship campus festivals, interactive science workshops, and student leadership recruitments at Navrachana University." />
+
+  <!-- Google Fonts: Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .reg-hero {
+      padding: 48px 0 28px;
+    }
+    .reg-hero-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+      padding: 36px 40px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(225, 29, 72, 0.06));
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+    .reg-hero-copy h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      line-height: 1.12;
+      color: var(--ink-900);
+    }
+    .reg-hero-copy p {
+      margin: 16px 0 0;
+      color: var(--ink-600);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+    .reg-hero-visual {
+      display: flex;
+      justify-content: center;
+    }
+    .logo-panel {
+      width: min(100%, 320px);
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-panel img {
+      display: block;
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+    }
+
+    /* Perks Grid */
+    .reg-perks {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 36px 0;
+    }
+    .reg-perk-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+    }
+    .reg-perk-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--flame-500);
+    }
+    .reg-perk-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .reg-perk-card h3 {
+      font-size: 1.05rem;
+      color: var(--ink-900);
+      margin: 0 0 8px;
+    }
+    .reg-perk-card p {
+      font-size: 0.88rem;
+      color: var(--ink-600);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Form Container */
+    .reg-form-container {
+      max-width: 860px;
+      margin: 0 auto 60px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 44px;
+      box-shadow: var(--shadow-md);
+    }
+    .reg-form-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .reg-form-header h2 {
+      font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+      color: var(--ink-900);
+      margin: 0 0 10px;
+    }
+    .reg-form-header p {
+      color: var(--ink-600);
+      font-size: 0.98rem;
+      margin: 0;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+    .form-group label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink-900);
+    }
+    .form-control {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #1e293b;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #f97316;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    }
+    .form-control::placeholder {
+      color: #94a3b8;
+    }
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
+      padding-right: 44px;
+      cursor: pointer;
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn-submit-reg {
+      width: 100%;
+      padding: 16px 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f97316 0%, #e11d48 100%);
+      color: #ffffff;
+      font-size: 1.08rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+      transition: all 0.25s ease;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .btn-submit-reg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.4);
+    }
+    .event-pill-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .event-pill-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .event-pill-btn.active {
+      background: linear-gradient(135deg, #f97316 0%, #e11d48 100%);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 10px rgba(249, 115, 22, 0.25);
+    }
+
+    /* Digital Pass Modal / Result Card */
+    .reg-pass-card {
+      display: none;
+      border: 2px dashed #f97316;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #ffffff 0%, #fffaf5 100%);
+      padding: 36px 30px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      animation: fadeIn 0.4s ease;
+    }
+    .reg-pass-card.show {
+      display: block;
+    }
+    .pass-badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 999px;
+      background: #10b981;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .pass-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin: 0 0 6px;
+    }
+    .pass-code {
+      font-family: monospace;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f97316;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .pass-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      text-align: left;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .pass-detail-item span {
+      font-size: 0.82rem;
+      color: var(--ink-500);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .pass-detail-item strong {
+      font-size: 0.95rem;
+      color: var(--ink-900);
+    }
+    .pass-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .reg-hero-inner {
+        grid-template-columns: 1fr;
+        padding: 28px 20px;
+      }
+      .reg-perks {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .reg-form-container {
+        padding: 28px 20px;
+      }
+      .pass-details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 580px) {
+      .reg-perks {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Navigation Bar
+       ========================================================================== -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-brand">
+      <a href="index.html" class="brand-link" aria-label="Phoenix Club home">
+        <div class="brand-logo-wrap">
+          <img src="phoenix-club-logo.png" alt="Phoenix Club emblem" class="logo-left" />
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">Phoenix Club <span class="brand-title-tag">NUV</span></span>
+          <span class="brand-subtitle">Science | Innovation | Leadership</span>
+        </div>
+      </a>
+    </div>
+
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Team <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="core-team.html#core-heads-title">Core Team</a></li>
+          <li><a href="committee.html#committee-title">Committee</a></li>
+          <li><a href="past-members.html">Past Members</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Events <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="upcoming-events.html">Upcoming Events</a></li>
+          <li><a href="past-events.html">Past Events</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Gallery <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="upcoming-events.html#guest-lectures">Guest Lectures</a></li>
+          <li><a href="past-events.html#highlights">Annual Highlights</a></li>
+        </ul>
+      </li>
+
+      <li><a href="sponsorships.html">Sponsorships</a></li>
+      <li><a href="registration.html" class="nav-registration-tag current">Registration</a></li>
+      <li class="cta"><a href="contact.html">Contact Us</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <div class="nuv-logo-wrap">
+        <img src="navrachana-university-logo.png" alt="Navrachana University logo" class="logo-right" />
+      </div>
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light and dark theme" title="Switch to Dark Mode">
+        <span class="theme-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+        <span class="theme-label">Dark</span>
+      </button>
+      <button type="button" class="navbar-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       Main Content
+       ========================================================================== -->
+  <main class="container team-page">
+    <section class="reg-hero">
+      <div class="reg-hero-inner reveal">
+        <div class="reg-hero-copy">
+          <span class="section-tag">Join the Community</span>
+          <h1>Phoenix Club Registration 2026</h1>
+          <p>
+            Step into an energetic ecosystem of scientific inquiry, hands-on experimentation, and collaborative campus leadership. Register today to claim your student membership pass or reserve your spot for upcoming flagship events.
+          </p>
+        </div>
+
+        <div class="reg-hero-visual">
+          <div class="logo-panel">
+            <img src="phoenix-club-logo.png" alt="Phoenix Club emblem" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perks / Why Register Grid -->
+    <section class="reveal">
+      <div class="reg-perks">
+        <div class="reg-perk-card">
+          <span class="reg-perk-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          </span>
+          <h3>Priority Event Passes</h3>
+          <p>Fast-track admission to all campus festivals, hackathons, science exhibitions, and guest workshops.</p>
+        </div>
+
+        <div class="reg-perk-card">
+          <span class="reg-perk-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0-14 0"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><line x1="12" y1="6" x2="12" y2="2"></line></svg>
+          </span>
+          <h3>Hands-on Labs &amp; Kits</h3>
+          <p>Direct access to hardware tools, sensors, microcontroller kits, and collaborative lab sessions.</p>
+        </div>
+
+        <div class="reg-perk-card">
+          <span class="reg-perk-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+          </span>
+          <h3>Leadership Certificates</h3>
+          <p>Official commendation letters recognized by Navrachana University for resume enhancement.</p>
+        </div>
+
+        <div class="reg-perk-card">
+          <span class="reg-perk-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </span>
+          <h3>Interdisciplinary Circle</h3>
+          <p>Engage with passionate mentors and student peers across Science, Engineering, Design, and Business.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section class="reveal">
+      <div class="reg-form-container">
+        <!-- Interactive Form -->
+        <div id="registrationFormWrapper">
+          <div class="reg-form-header">
+            <span class="section-tag">Official Enrollment</span>
+            <h2>Complete Your Registration</h2>
+            <p>Fill in your university credentials to receive your digital registration pass instantly.</p>
+          </div>
+
+          <div id="registrationAlert" style="display: none; padding: 14px 18px; border-radius: 12px; margin-bottom: 24px; font-size: 0.92rem; font-weight: 600; line-height: 1.5;"></div>
+
+          <form id="studentRegistrationForm" onsubmit="handleRegistrationSubmit(event)">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="studentName">Full Name *</label>
+                <input type="text" id="studentName" class="form-control" placeholder="e.g. Aaryan Sharma" required />
+              </div>
+
+              <div class="form-group">
+                <label for="studentRoll">University Enrollment / Roll No. *</label>
+                <input type="text" id="studentRoll" class="form-control" placeholder="e.g. 240101001" required />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="studentSchool">School / Discipline *</label>
+                <select id="studentSchool" class="form-control" required>
+                  <option value="" disabled selected>Select Your School</option>
+                  <option value="School of Science">School of Science</option>
+                  <option value="School of Engineering & Technology">School of Engineering &amp; Technology</option>
+                  <option value="School of Environmental Design & Architecture">School of Environmental Design &amp; Architecture</option>
+                  <option value="School of Business & Law">School of Business &amp; Law</option>
+                  <option value="School of Liberal Arts & Education">School of Liberal Arts &amp; Education</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="studentYear">Current Academic Year *</label>
+                <select id="studentYear" class="form-control" required>
+                  <option value="" disabled selected>Select Academic Year</option>
+                  <option value="1st Year (Freshman)">1st Year (Freshman)</option>
+                  <option value="2nd Year (Sophomore)">2nd Year (Sophomore)</option>
+                  <option value="3rd Year (Junior)">3rd Year (Junior)</option>
+                  <option value="4th Year (Senior)">4th Year (Senior)</option>
+                  <option value="Postgraduate / Masters">Postgraduate / Masters</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="studentEmail">University / Personal Email *</label>
+                <input type="email" id="studentEmail" class="form-control" placeholder="e.g. aaryan@nuv.ac.in" required />
+              </div>
+
+              <div class="form-group">
+                <label for="studentPhone">WhatsApp / Phone Number *</label>
+                <input type="tel" id="studentPhone" class="form-control" placeholder="e.g. +91 98765 43210" required />
+              </div>
+            </div>
+
+            <!-- Event Quick Filter Pills -->
+            <div class="form-group">
+              <label>Quick Select Event</label>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+                <button type="button" class="event-pill-btn active" onclick="selectEventQuick('Investiture Ceremony 2026')">Investiture Ceremony</button>
+                <button type="button" class="event-pill-btn" onclick="selectEventQuick('Wildlife Week Celebration 2026')">Wildlife Week</button>
+                <button type="button" class="event-pill-btn" onclick="selectEventQuick('Science & Innovation Hands-On Workshop')">Science Workshop</button>
+                <button type="button" class="event-pill-btn" onclick="selectEventQuick('Distinguished Guest Lecture')">Guest Lecture</button>
+                <button type="button" class="event-pill-btn" onclick="selectEventQuick('Phoenix Community Mixer & Orientation')">Community Mixer</button>
+                <button type="button" class="event-pill-btn" onclick="selectEventQuick('Teacher\'s Day Celebration')">Teacher's Day</button>
+                <button type="button" class="event-pill-btn" onclick="selectEventQuick('Annual General Club Membership 2026')">General Membership</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="registrationCategory">Registration Category / Select Event *</label>
+              <select id="registrationCategory" class="form-control" required onchange="updateEventCardDetails()">
+                <optgroup label="Flagship Campus Events (Upcoming 2026)">
+                  <option value="Investiture Ceremony 2026" data-date="16 Sep 2026 | 10:00 AM" data-venue="NUV Main Auditorium" data-type="Ceremony &amp; Council Pinning" selected>Investiture Ceremony 2026 (16 Sep 2026)</option>
+                  <option value="Wildlife Week Celebration 2026" data-date="19 Sep 2026 | 11:30 AM" data-venue="Central Courtyard" data-type="Biodiversity Awareness Drive">Wildlife Week Celebration 2026 (19 Sep 2026)</option>
+                  <option value="Teacher's Day Celebration" data-date="5 Sep 2026 | 02:00 PM" data-venue="Multi-Purpose Hall" data-type="Faculty Felicitation">Teacher's Day Celebration &amp; Felicitation</option>
+                </optgroup>
+                <optgroup label="Workshops &amp; Technical Masterclasses">
+                  <option value="Science &amp; Innovation Hands-On Workshop" data-date="Monthly Series (Next: 26 Sep 2026)" data-venue="Innovation Lab 2" data-type="Prototyping &amp; Lab Workshop">Science &amp; Innovation Hands-On Workshop</option>
+                  <option value="Distinguished Guest Lecture" data-date="Bi-Monthly (Next: 22 Sep 2026)" data-venue="Seminar Hall A" data-type="Academic Breakthrough Keynote">Distinguished Guest Lecture: Modern Biotechnology</option>
+                  <option value="Annual Science Summit &amp; Hackathon 2026" data-date="Academic Term 2026" data-venue="Campus Grounds" data-type="Interdisciplinary Hackathon">Annual Science Summit &amp; Hackathon 2026</option>
+                </optgroup>
+                <optgroup label="Community &amp; Annual Membership">
+                  <option value="Phoenix Community Mixer &amp; Orientation" data-date="28 Sep 2026 | 04:00 PM" data-venue="Student Center Lounge" data-type="Networking &amp; Team Induction">Phoenix Community Mixer &amp; Orientation</option>
+                  <option value="Annual General Club Membership 2026" data-date="Full Academic Year 2026" data-venue="Navrachana University" data-type="All-Access Club Pass">Annual General Club Membership 2026 (All Events Access)</option>
+                </optgroup>
+                <optgroup label="Committee Volunteering &amp; Leadership">
+                  <option value="Committee Volunteer: Technical Team" data-date="Academic Term 2026-27" data-venue="Tech Coordination Desk" data-type="Coordinator Application">Committee Volunteer: Technical Team (Aditya &amp; Shreya)</option>
+                  <option value="Committee Volunteer: Outreach Team" data-date="Academic Term 2026-27" data-venue="Outreach Coordination Desk" data-type="Coordinator Application">Committee Volunteer: Outreach Team (Palak &amp; Afiya)</option>
+                  <option value="Committee Volunteer: Decoration Team" data-date="Academic Term 2026-27" data-venue="Creative Studio" data-type="Coordinator Application">Committee Volunteer: Decoration Team (Radhika, Chandravali, Krishna, Vani)</option>
+                  <option value="Committee Volunteer: Media Team" data-date="Academic Term 2026-27" data-venue="Media &amp; Press Desk" data-type="Coordinator Application">Committee Volunteer: Media Team (Drashti, Khadija, Pushti, Vidhi)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <!-- Dynamic Event Info Banner -->
+            <div id="eventInfoBanner" style="padding: 16px 20px; border-radius: 14px; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.22); margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
+              <div>
+                <span style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: var(--flame-600); letter-spacing: 0.06em; display: block;" id="eventBannerType">Ceremony &amp; Council Pinning</span>
+                <strong style="font-size: 1.05rem; color: var(--ink-900);" id="eventBannerName">Investiture Ceremony 2026</strong>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 0.82rem; color: var(--ink-500); display: inline-flex; align-items: center; gap: 4px;" id="eventBannerVenue">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>NUV Main Auditorium</span>
+                </span>
+                <span style="font-size: 0.84rem; font-weight: 700; color: var(--flame-600); display: inline-flex; align-items: center; gap: 4px;" id="eventBannerDate">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>16 Sep 2026 | 10:00 AM</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="studentMotivation">What excites you about joining Phoenix Club? (Optional)</label>
+              <textarea id="studentMotivation" class="form-control" placeholder="Share your passions, hobbies, technical skills, or event ideas..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit-reg">Submit Registration</button>
+          </form>
+        </div>
+
+        <!-- Digital Pass Card (Shown upon successful submission) -->
+        <div id="registrationPassCard" class="reg-pass-card">
+          <span class="pass-badge" id="passBadgeText">Event Entry Pass Confirmed</span>
+          <h3 class="pass-title" id="passEventTitle">Investiture Ceremony 2026 Pass</h3>
+          <span class="pass-code" id="passGeneratedCode">PHX-EVT-8492</span>
+
+          <div class="pass-details-grid">
+            <div class="pass-detail-item">
+              <span>Member / Attendee</span>
+              <strong id="passName">-</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>Enrollment ID</span>
+              <strong id="passRoll">-</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>School / Faculty</span>
+              <strong id="passSchool">-</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>Registered Event / Category</span>
+              <strong id="passCategory">-</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>Event Venue</span>
+              <strong id="passVenue">NUV Main Auditorium</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>Event Date &amp; Time</span>
+              <strong id="passEventDate">16 Sep 2026 | 10:00 AM</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>Pass Status</span>
+              <strong style="color: #10b981;">Verified &bull; Grade 'A' NAAC Accredited</strong>
+            </div>
+            <div class="pass-detail-item">
+              <span>Issued Date</span>
+              <strong id="passDate">14 Sep 2026</strong>
+            </div>
+          </div>
+
+          <p style="font-size: 0.9rem; color: var(--ink-600); margin-bottom: 24px;">
+            Your registration has been logged with the council. Please take a screenshot or print this pass for fast-track entry at the event registration desk.
+          </p>
+
+          <div class="pass-actions">
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print / Save Pass</button>
+            <button type="button" class="btn btn-secondary" onclick="resetRegistrationView()">Register for Another Event</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       Site Footer
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-brand-logo-link">
+          <img src="phoenix-club-logo.png" alt="Phoenix Club logo" />
+          <div>
+            <div class="footer-brand-text-title">Phoenix Club</div>
+            <div class="footer-brand-text-sub">Navrachana University, Vadodara</div>
+          </div>
+        </a>
+        <p>A student-led science &amp; innovation community empowering young minds through research curiosity, leadership experiences, and campus collaborations.</p>
+        <div>
+          <a href="/admin/login" class="footer-admin-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Admin Portal Login
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="footer-title">Navigation</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">&#8250; Home</a></li>
+          <li><a href="about.html">&#8250; About Us</a></li>
+          <li><a href="core-team.html">&#8250; Core Leadership</a></li>
+          <li><a href="committee.html">&#8250; Supporting Committee</a></li>
+          <li><a href="upcoming-events.html">&#8250; Upcoming Events</a></li>
+          <li><a href="past-events.html">&#8250; Gallery &amp; Highlights</a></li>
+          <li><a href="past-members.html">&#8250; Alumni &amp; Past Members</a></li>
+          <li><a href="registration.html" style="color: #ea580c; font-weight: 800;">&#8250; Student Registration</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-title">Connect &amp; Engage</h3>
+        <ul class="footer-links">
+          <li><a href="sponsorships.html">&#8250; Sponsorship Packages</a></li>
+          <li><a href="contact.html">&#8250; Contact Desk</a></li>
+          <li style="margin-top: 6px;">
+            <a href="https://www.instagram.com" target="_blank" rel="noreferrer" class="footer-social-pill insta">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              Instagram @phoenixclub
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" class="footer-social-pill linkedin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              LinkedIn Community
+            </a>
+          </li>
+          <li>
+            <a href="mailto:phoenixclub@nuv.ac.in" class="footer-social-pill email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              phoenixclub@nuv.ac.in
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-title">Campus Location</h3>
+        <div class="map-block">
+          <iframe
+            src="https://www.google.com/maps?q=Navrachana%20University%20Vadodara&z=13&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Navrachana University Vadodara Location"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="footer-copy">
+        <div>
+          &copy; <span id="year">2026</span> Phoenix Club, Navrachana University. All rights reserved.
+        </div>
+        <div class="footer-badge-naac">
+          <span>&#10003;</span> Accredited with Grade &lsquo;A&rsquo; by NAAC
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="navbar.js"></script>
+  <script>
+    let activeEventsList = [];
+
+    async function fetchActiveEventsFromBackend() {
+      try {
+        const res = await fetch('/api/events/active');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.events && data.events.length > 0) {
+          activeEventsList = data.events;
+          const select = document.getElementById('registrationCategory');
+          select.innerHTML = '';
+
+          const group = document.createElement('optgroup');
+          group.label = 'Active University Events (2026)';
+
+          data.events.forEach((ev, idx) => {
+            const opt = document.createElement('option');
+            opt.value = ev.title;
+            opt.textContent = `${ev.title} (${ev.event_date})${ev.is_full ? ' — FULL' : ''}`;
+            opt.setAttribute('data-id', ev.id);
+            opt.setAttribute('data-date', `${ev.event_date} | ${ev.event_time}`);
+            opt.setAttribute('data-venue', ev.venue);
+            opt.setAttribute('data-type', ev.category);
+            if (ev.is_full) opt.disabled = true;
+            if (idx === 0) opt.selected = true;
+            group.appendChild(opt);
+          });
+
+          select.appendChild(group);
+          updateEventCardDetails();
+        }
+      } catch (e) {
+        console.log('Using static event definitions as fallback:', e);
+      }
+    }
+
+    function updateEventCardDetails() {
+      const select = document.getElementById('registrationCategory');
+      if (!select) return;
+      const opt = select.options[select.selectedIndex];
+      if (!opt) return;
+
+      const date = opt.getAttribute('data-date') || 'Academic Term 2026';
+      const venue = opt.getAttribute('data-venue') || 'Navrachana University';
+      const type = opt.getAttribute('data-type') || 'Student Pass';
+
+      const bannerName = document.getElementById('eventBannerName');
+      const bannerType = document.getElementById('eventBannerType');
+      const bannerVenue = document.getElementById('eventBannerVenue');
+      const bannerDate = document.getElementById('eventBannerDate');
+
+      if (bannerName) bannerName.textContent = opt.value;
+      if (bannerType) bannerType.textContent = type;
+      if (bannerVenue) bannerVenue.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:middle; margin-right:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>' + venue + '</span>';
+      if (bannerDate) bannerDate.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:middle; margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span>' + date + '</span>';
+
+      // Update pill active state
+      document.querySelectorAll('.event-pill-btn').forEach(function (btn) {
+        const text = btn.textContent.trim();
+        const matches = opt.value.toLowerCase().includes(text.toLowerCase()) || 
+                        (text === 'General Membership' && opt.value.includes('Membership')) ||
+                        (text === 'Science Workshop' && opt.value.includes('Science & Innovation')) ||
+                        (text === 'Guest Lecture' && opt.value.includes('Distinguished Guest'));
+        btn.classList.toggle('active', Boolean(matches));
+      });
+    }
+
+    function selectEventQuick(eventName) {
+      const select = document.getElementById('registrationCategory');
+      if (!select) return;
+      for (let i = 0; i < select.options.length; i++) {
+        const optVal = select.options[i].value;
+        if (optVal === eventName || optVal.includes(eventName)) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      updateEventCardDetails();
+    }
+
+    async function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const alertBox = document.getElementById('registrationAlert');
+      alertBox.style.display = 'none';
+
+      const submitBtn = document.querySelector('.btn-submit-reg');
+      const originalBtnText = submitBtn.textContent;
+
+      const name = document.getElementById('studentName').value.trim();
+      const roll = document.getElementById('studentRoll').value.trim();
+      const school = document.getElementById('studentSchool').value;
+      const year = document.getElementById('studentYear').value;
+      const email = document.getElementById('studentEmail').value.trim();
+      const phone = document.getElementById('studentPhone').value.trim();
+      const select = document.getElementById('registrationCategory');
+      const opt = select.options[select.selectedIndex];
+      const category = opt.value;
+      const eventId = opt.getAttribute('data-id') || null;
+      const date = opt.getAttribute('data-date') || 'Academic Term 2026';
+      const venue = opt.getAttribute('data-venue') || 'Navrachana University';
+      const notes = (document.getElementById('studentMotivation') ? document.getElementById('studentMotivation').value.trim() : '');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Verifying & Generating Official Pass...';
+
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: name,
+            enrollment_id: roll,
+            department: school,
+            academic_year: year,
+            email: email,
+            phone: phone,
+            event_id: eventId,
+            event_name: category,
+            additional_info: notes
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.status === 201) {
+          // Success: Database-generated pass!
+          const reg = data.registration;
+          document.getElementById('passGeneratedCode').textContent = reg.reg_code;
+          document.getElementById('passName').textContent = reg.full_name;
+          document.getElementById('passRoll').textContent = reg.enrollment_id;
+          document.getElementById('passSchool').textContent = reg.department;
+          document.getElementById('passCategory').textContent = reg.event_name;
+          document.getElementById('passVenue').textContent = reg.venue || venue;
+          document.getElementById('passEventDate').textContent = `${reg.event_date} | ${reg.event_time}` || date;
+          document.getElementById('passEventTitle').textContent = reg.event_name + (reg.event_name.includes('Membership') ? '' : ' Pass');
+          document.getElementById('passBadgeText').textContent = reg.event_name.includes('Membership') ? 'Membership Pass Confirmed' : 'Event Entry Pass Confirmed';
+          document.getElementById('passDate').textContent = reg.created_at;
+
+          document.getElementById('registrationFormWrapper').style.display = 'none';
+          const passCard = document.getElementById('registrationPassCard');
+          passCard.classList.add('show');
+          passCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        if (response.status === 409) {
+          // Duplicate registration error
+          alertBox.style.display = 'block';
+          alertBox.style.background = 'rgba(239, 68, 68, 0.12)';
+          alertBox.style.border = '1px solid rgba(239, 68, 68, 0.35)';
+          alertBox.style.color = '#f87171';
+          alertBox.innerHTML = `
+            <div style="display:flex; align-items:flex-start; gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0; margin-top:2px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <div>
+                <strong>Duplicate Registration Detected:</strong><br>
+                Student with Enrollment ID <strong>${roll}</strong> is already registered for this event.<br>
+                Existing Pass Code: <strong style="font-family: monospace; color: #f97316;">${data.reg_code || 'Recorded in database'}</strong>.
+              </div>
+            </div>
+          `;
+          alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // Other error (validation or capacity)
+          alertBox.style.display = 'block';
+          alertBox.style.background = 'rgba(239, 68, 68, 0.12)';
+          alertBox.style.border = '1px solid rgba(239, 68, 68, 0.35)';
+          alertBox.style.color = '#f87171';
+          const errorMsg = data.messages ? data.messages.join('<br>') : (data.error || 'Registration failed. Please check your inputs.');
+          alertBox.innerHTML = `<strong>Registration Error:</strong><br>${errorMsg}`;
+          alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (err) {
+        console.error('Network error submitting registration:', err);
+        // Offline / client fallback
+        const isMembership = category.includes('Membership');
+        const fallbackCode = (isMembership ? 'PHX-MEM-' : 'PHX-EVT-') + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('passGeneratedCode').textContent = fallbackCode;
+        document.getElementById('passName').textContent = name;
+        document.getElementById('passRoll').textContent = roll;
+        document.getElementById('passSchool').textContent = school;
+        document.getElementById('passCategory').textContent = category;
+        document.getElementById('passVenue').textContent = venue;
+        document.getElementById('passEventDate').textContent = date;
+        document.getElementById('passEventTitle').textContent = category + (isMembership ? '' : ' Pass');
+        document.getElementById('passBadgeText').textContent = isMembership ? 'Membership Pass Confirmed' : 'Event Entry Pass Confirmed';
+        document.getElementById('passDate').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+        document.getElementById('registrationFormWrapper').style.display = 'none';
+        const passCard = document.getElementById('registrationPassCard');
+        passCard.classList.add('show');
+        passCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    }
+
+    function resetRegistrationView() {
+      document.getElementById('studentRegistrationForm').reset();
+      document.getElementById('registrationAlert').style.display = 'none';
+      document.getElementById('registrationPassCard').classList.remove('show');
+      document.getElementById('registrationFormWrapper').style.display = 'block';
+      updateEventCardDetails();
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+      fetchActiveEventsFromBackend();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const eventParam = urlParams.get('event');
+      if (eventParam) {
+        if (eventParam === 'investiture') selectEventQuick('Investiture Ceremony');
+        else if (eventParam === 'wildlife') selectEventQuick('Wildlife Week');
+        else if (eventParam === 'teachers-day') selectEventQuick('Teacher');
+        else if (eventParam === 'workshop') selectEventQuick('Science & Innovation');
+        else if (eventParam === 'lecture') selectEventQuick('Distinguished Guest');
+        else if (eventParam === 'mixer') selectEventQuick('Community Mixer');
+        else if (eventParam === 'membership') selectEventQuick('Annual General');
+        else if (eventParam === 'summit') selectEventQuick('Annual Science Summit');
+      } else {
+        updateEventCardDetails();
+      }
+    });
+  </script>
+</body>
+</html>

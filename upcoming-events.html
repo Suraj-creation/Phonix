@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Events — Phoenix Club | Navrachana University</title>
+  <meta name="description" content="Discover upcoming workshops, lectures, ceremonies, and collaborative experiences organized by Phoenix Club at Navrachana University." />
+
+  <!-- Google Fonts: Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Navigation Bar
+       ========================================================================== -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-brand">
+      <a href="index.html" class="brand-link" aria-label="Phoenix Club home">
+        <div class="brand-logo-wrap">
+          <img src="phoenix-club-logo.png" alt="Phoenix Club emblem" class="logo-left" />
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">Phoenix Club <span class="brand-title-tag">NUV</span></span>
+          <span class="brand-subtitle">Science | Innovation | Leadership</span>
+        </div>
+      </a>
+    </div>
+
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Team <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="core-team.html#core-heads-title">Core Team</a></li>
+          <li><a href="committee.html#committee-title">Committee</a></li>
+          <li><a href="past-members.html">Past Members</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle current" aria-haspopup="true" aria-expanded="false">
+          Events <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="upcoming-events.html" class="current">Upcoming Events</a></li>
+          <li><a href="past-events.html">Past Events</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Gallery <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="upcoming-events.html#guest-lectures">Guest Lectures</a></li>
+          <li><a href="past-events.html#highlights">Annual Highlights</a></li>
+        </ul>
+      </li>
+
+      <li><a href="sponsorships.html">Sponsorships</a></li>
+      <li><a href="registration.html" class="nav-registration-tag">Registration</a></li>
+      <li class="cta"><a href="contact.html">Contact Us</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <div class="nuv-logo-wrap">
+        <img src="navrachana-university-logo.png" alt="Navrachana University logo" class="logo-right" />
+      </div>
+      <button type="button" class="navbar-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       Page Hero
+       ========================================================================== -->
+  <main class="container team-page">
+    <section class="page-hero">
+      <div class="page-hero-inner reveal">
+        <div class="page-hero-copy">
+          <span class="section-tag">Calendar 2026</span>
+          <h1>Upcoming Events &amp; Experiences</h1>
+          <p>
+            Phoenix Club brings together hands-on learning, creative leadership, and scientific dialogue through campus-wide events designed to inspire curiosity and forge strong friendships.
+          </p>
+        </div>
+
+        <div class="page-hero-visual">
+          <div class="logo-panel">
+            <img src="phoenix-club-logo.png" alt="Phoenix Club official emblem" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Featured Upcoming Events & Registration
+         ========================================================================== -->
+    <section class="team-section" id="registration" aria-labelledby="upcoming-events-heading">
+      <span id="upcoming-events-title" aria-hidden="true" style="display: block; position: relative; top: -90px; visibility: hidden;"></span>
+      <div class="section-heading reveal">
+        <span class="section-tag">Highlights</span>
+        <h2 id="upcoming-events-heading">What’s Coming Next</h2>
+        <p>Save the dates for our scheduled club gatherings, ceremonies, and awareness drives.</p>
+      </div>
+
+      <div class="team-grid">
+        <!-- Event 1: Investiture Ceremony -->
+        <article class="team-card reveal">
+          <div class="member-photo" style="height: 240px;">
+            <img src="images/events/investiture-ceremony.jpg" alt="Investiture Ceremony" class="lightbox-trigger" />
+            <span class="card-role-chip" style="background: var(--flame-600);">16 Sep 2026</span>
+          </div>
+          <div class="member-copy">
+            <span class="role-badge">Ceremony | Flagship</span>
+            <h3>Investiture Ceremony</h3>
+            <p>A formal celebration of student leadership, the pinning of the new core council, and the inauguration of an exciting year of activities.</p>
+            <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--ink-500); display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                NUV Auditorium
+              </span>
+              <a href="registration.html?event=investiture" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.8rem; text-decoration: none;">Register / RSVP</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Event 2: Wildlife Week -->
+        <article class="team-card reveal">
+          <div class="member-photo" style="height: 240px;">
+            <img src="images/events/wildlife-week.jpg" alt="Wildlife Week Celebration" class="lightbox-trigger" />
+            <span class="card-role-chip" style="background: var(--flame-600);">19 Sep 2026</span>
+          </div>
+          <div class="member-copy">
+            <span class="role-badge">Environment | Life Sciences</span>
+            <h3>Wildlife Week Celebration</h3>
+            <p>An interactive awareness campaign celebrating biodiversity, habitat preservation, and student responsibility toward wildlife ecosystems.</p>
+            <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--ink-500); display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Central Courtyard
+              </span>
+              <a href="registration.html?event=wildlife" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.8rem; text-decoration: none;">Register / RSVP</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Event 3: Teachers Day -->
+        <article class="team-card reveal">
+          <div class="member-photo" style="height: 240px;">
+            <img src="images/events/teachers-day.jpg" alt="Teachers Day Celebration" class="lightbox-trigger" />
+            <span class="card-role-chip" style="background: var(--flame-600);">5 Sep 2026</span>
+          </div>
+          <div class="member-copy">
+            <span class="role-badge">Community | Gratitude</span>
+            <h3>Teacher's Day Celebration</h3>
+            <p>Expressing heartfelt gratitude to our academic mentors and faculty advisors who continuously encourage student curiosity and scientific growth.</p>
+            <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--ink-500); display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Multi-Purpose Hall
+              </span>
+              <a href="registration.html?event=teachers-day" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.8rem; text-decoration: none;">Register / RSVP</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Additional Sessions -->
+      <div class="team-group reveal" id="guest-lectures">
+        <div class="team-group-header">
+          <div class="group-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          </div>
+          <div>
+            <h3>Academic Talks &amp; Interactive Mixers</h3>
+            <p style="font-size: 0.9rem; color: var(--ink-500); margin: 0;">Special sessions connecting students with visiting experts and campus peers.</p>
+          </div>
+        </div>
+
+        <div class="team-grid">
+          <article class="team-card small-card">
+            <div class="member-photo">
+              <img src="images/events/guest-lecture.png" alt="Guest Lecture" class="lightbox-trigger" />
+            </div>
+            <div class="member-copy">
+              <span class="role-badge">Academic Lecture</span>
+              <h4>Distinguished Guest Lecture</h4>
+              <p>Expert insights on scientific breakthroughs, modern biotechnology trends, and research career pathways.</p>
+              <div style="margin-top: auto; padding-top: 10px;">
+                <a href="registration.html?event=lecture" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.78rem; width: 100%; text-decoration: none; text-align: center; display: inline-block;">Register for Talk</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="team-card small-card">
+            <div class="member-photo">
+              <img src="images/events/community-mixer.jpg" alt="Community Mixer" class="lightbox-trigger" />
+            </div>
+            <div class="member-copy">
+              <span class="role-badge">Social | Networking</span>
+              <h4>Community Mixer</h4>
+              <p>Networking, club orientation, idea brainstorming, and welcoming incoming members to the Phoenix family.</p>
+              <div style="margin-top: auto; padding-top: 10px;">
+                <a href="registration.html?event=mixer" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.78rem; width: 100%; text-decoration: none; text-align: center; display: inline-block;">Register for Mixer</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="team-card small-card">
+            <div class="member-photo">
+              <img src="images/events/science-workshop.jpg" alt="Workshop Session" class="lightbox-trigger" />
+            </div>
+            <div class="member-copy">
+              <span class="role-badge">Hands-On Workshop</span>
+              <h4>Science &amp; Innovation Workshop</h4>
+              <p>Experiential laboratory techniques, scientific data visualization, and team problem-solving challenges.</p>
+              <div style="margin-top: auto; padding-top: 10px;">
+                <a href="registration.html?event=workshop" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.78rem; width: 100%; text-decoration: none; text-align: center; display: inline-block;">Register for Workshop</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       Site Footer
+       ========================================================================== -->
+  <!-- ==========================================================================
+     Phoenix Club — Reusable Site Footer Component
+     Navrachana University, Vadodara
+     ========================================================================== -->
+<!-- ==========================================================================
+     Phoenix Club — Reusable Site Footer Component
+     Navrachana University, Vadodara
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo-link">
+        <img src="phoenix-club-logo.png" alt="Phoenix Club logo" />
+        <div>
+          <div class="footer-brand-text-title">Phoenix Club</div>
+          <div class="footer-brand-text-sub">Navrachana University, Vadodara</div>
+        </div>
+      </a>
+      <p>A student-led science &amp; innovation community empowering young minds through research curiosity, leadership experiences, and campus collaborations.</p>
+      <div>
+        <a href="/admin/login" class="footer-admin-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Admin Portal Login
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Navigation</h3>
+      <ul class="footer-links">
+        <li><a href="index.html">&#8250; Home</a></li>
+        <li><a href="about.html">&#8250; About Us</a></li>
+        <li><a href="core-team.html">&#8250; Core Leadership</a></li>
+        <li><a href="committee.html">&#8250; Supporting Committee</a></li>
+        <li><a href="upcoming-events.html">&#8250; Upcoming Events</a></li>
+        <li><a href="past-events.html">&#8250; Gallery &amp; Highlights</a></li>
+        <li><a href="past-members.html">&#8250; Alumni &amp; Past Members</a></li>
+        <li><a href="registration.html" style="color: #ea580c; font-weight: 800;">&#8250; Student Registration</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Connect &amp; Engage</h3>
+      <ul class="footer-links">
+        <li><a href="sponsorships.html">&#8250; Sponsorship Packages</a></li>
+        <li><a href="contact.html">&#8250; Contact Desk</a></li>
+        <li style="margin-top: 6px;">
+          <a href="https://www.instagram.com" target="_blank" rel="noreferrer" class="footer-social-pill insta">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            Instagram @phoenixclub
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" class="footer-social-pill linkedin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn Community
+          </a>
+        </li>
+        <li>
+          <a href="mailto:phoenixclub@nuv.ac.in" class="footer-social-pill email">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            phoenixclub@nuv.ac.in
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Campus Location</h3>
+      <div class="map-block">
+        <iframe
+          src="https://www.google.com/maps?q=Navrachana%20University%20Vadodara&z=13&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Navrachana University Vadodara Location"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="footer-copy">
+      <div>
+        &copy; <span id="year">2026</span> Phoenix Club, Navrachana University. All rights reserved.
+      </div>
+      <div class="footer-badge-naac">
+        <span>&#10003;</span> Accredited with Grade &lsquo;A&rsquo; by NAAC
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sponsorships &amp; Partners — Phoenix Club | Navrachana University</title>
+  <meta name="description" content="Partner with Phoenix Club at Navrachana University to engage with dynamic student talent, sponsor flagship festivals, and support scientific innovation." />
+
+  <!-- Google Fonts: Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Impact Metrics (4 Stat Cards Grid) */
+    .sponsor-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-top: 10px;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 38px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      transition: transform var(--transition-base, 0.25s ease), box-shadow var(--transition-base, 0.25s ease), border-color var(--transition-base, 0.25s ease);
+      position: relative;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(249, 115, 22, 0.12);
+      border-color: rgba(249, 115, 22, 0.35);
+    }
+    .stat-card .number {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: #ea580c;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .stat-card p {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.5;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    @media (max-width: 960px) {
+      .sponsor-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .stat-card {
+        padding: 28px 18px;
+      }
+      .stat-card .number {
+        font-size: 2.25rem;
+      }
+    }
+    @media (max-width: 520px) {
+      .sponsor-stats {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    /* Tiers Grid Styling */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 36px;
+      margin-bottom: 50px;
+    }
+    .tier-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 36px 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-base);
+      position: relative;
+    }
+    .tier-card.featured {
+      border-color: var(--flame-500);
+      box-shadow: var(--shadow-flame);
+      background: linear-gradient(180deg, #ffffff 0%, #fffbf8 100%);
+    }
+    .tier-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--flame-500), var(--crimson-500));
+      color: #fff;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+    }
+    .tier-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .tier-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin-bottom: 8px;
+    }
+    .tier-desc {
+      font-size: 0.92rem;
+      color: var(--ink-500);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .tier-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-grow: 1;
+    }
+    .tier-perk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--ink-700);
+      line-height: 1.5;
+    }
+    .tier-perk-item .check {
+      color: #10b981;
+      font-weight: 800;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    /* Gratitude & Appreciation Section */
+    .thankyou-section {
+      margin-top: 30px;
+      margin-bottom: 40px;
+      background: linear-gradient(180deg, #ffffff 0%, #fffaf5 100%);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .thankyou-section::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .thankyou-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(249, 115, 22, 0.12);
+      color: var(--flame-600);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .thankyou-section h2 {
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      margin-bottom: 16px;
+      color: var(--ink-900);
+    }
+    .thankyou-copy {
+      max-width: 780px;
+      margin: 0 auto 30px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--ink-700);
+    }
+    .thankyou-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 36px 0;
+      text-align: left;
+    }
+    .thankyou-pillar-item {
+      padding: 24px 20px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+    }
+    .thankyou-pillar-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--flame-500);
+    }
+    .thankyou-pillar-item strong {
+      display: block;
+      color: var(--flame-600);
+      font-size: 1.02rem;
+      margin-bottom: 8px;
+    }
+    .thankyou-pillar-item p {
+      font-size: 0.9rem;
+      color: var(--ink-600);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .thankyou-cta-box {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .thankyou-cta-box p {
+      font-size: 0.98rem;
+      color: var(--ink-600);
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .tiers-grid {
+        grid-template-columns: 1fr;
+      }
+      .thankyou-pillars {
+        grid-template-columns: 1fr;
+      }
+      .thankyou-section {
+        padding: 32px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Navigation Bar
+       ========================================================================== -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-brand">
+      <a href="index.html" class="brand-link" aria-label="Phoenix Club home">
+        <div class="brand-logo-wrap">
+          <img src="phoenix-club-logo.png" alt="Phoenix Club emblem" class="logo-left" />
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">Phoenix Club <span class="brand-title-tag">NUV</span></span>
+          <span class="brand-subtitle">Science | Innovation | Leadership</span>
+        </div>
+      </a>
+    </div>
+
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Team <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="core-team.html#core-heads-title">Core Team</a></li>
+          <li><a href="committee.html#committee-title">Committee</a></li>
+          <li><a href="past-members.html">Past Members</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Events <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="upcoming-events.html">Upcoming Events</a></li>
+          <li><a href="past-events.html">Past Events</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Gallery <span class="arrow" aria-hidden="true">&#9662;</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="upcoming-events.html#guest-lectures">Guest Lectures</a></li>
+          <li><a href="past-events.html#highlights">Annual Highlights</a></li>
+        </ul>
+      </li>
+
+      <li><a href="sponsorships.html" class="current">Sponsorships</a></li>
+      <li><a href="registration.html" class="nav-registration-tag">Registration</a></li>
+      <li class="cta"><a href="contact.html">Contact Us</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <div class="nuv-logo-wrap">
+        <img src="navrachana-university-logo.png" alt="Navrachana University logo" class="logo-right" />
+      </div>
+      <button type="button" class="navbar-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       Page Hero
+       ========================================================================== -->
+  <main class="container team-page">
+    <section class="page-hero">
+      <div class="page-hero-inner reveal">
+        <div class="page-hero-copy">
+          <span class="section-tag">Partnerships | Campus Impact</span>
+          <h1>Support Ideas That Inspire the Next Generation</h1>
+          <p>
+            Phoenix Club creates meaningful student experiences through scientific research programs, leadership workshops, celebrations, and community initiatives. Partnering with us gives brands authentic, sustained engagement with over 4,000 students at Navrachana University.
+          </p>
+
+          <div class="hero-actions" style="margin-top: 24px; display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="#sponsorship-packages" class="btn btn-primary">View Packages</a>
+            <a href="contact.html" class="btn btn-secondary">Become a Sponsor</a>
+          </div>
+        </div>
+
+        <div class="page-hero-visual">
+          <div class="logo-panel">
+            <img src="phoenix-club-logo.png" alt="Phoenix Club official emblem" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Impact Metrics (4 Stat Cards)
+         ========================================================================== -->
+    <section class="reveal" style="margin: 30px 0;">
+      <div class="sponsor-stats">
+        <article class="stat-card">
+          <span class="number">10+</span>
+          <p>Student-led initiatives supported every academic year.</p>
+        </article>
+
+        <article class="stat-card">
+          <span class="number">4K+</span>
+          <p>Active campus students reached through on-ground events.</p>
+        </article>
+
+        <article class="stat-card">
+          <span class="number">20+</span>
+          <p>Community and institutional partnerships built over time.</p>
+        </article>
+
+        <article class="stat-card">
+          <span class="number">100%</span>
+          <p>Commitment to genuine student growth and sponsor visibility.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Current Sponsors Marquee
+         ========================================================================== -->
+    <section class="team-section" id="sponsorship-packages" aria-labelledby="packages-heading">
+      <div class="section-heading reveal">
+        <span class="section-tag">Our Supporters</span>
+        <h2 id="packages-heading">Meet our Valued Sponsors</h2>
+        <p>We are proud to celebrate the organizations and brands that empower student leadership and scientific curiosity.</p>
+      </div>
+
+      <div class="partners-marquee reveal" style="margin-bottom: 50px;">
+        <div class="partners-track">
+          <div class="partner-group">
+            <div class="partner-pill"><img src="sponsor-aurora.svg" alt="Aurora Innovations" /></div>
+            <div class="partner-pill"><img src="sponsor-vantage.svg" alt="Vantage Bio-Sciences" /></div>
+            <div class="partner-pill"><img src="sponsor-spark.svg" alt="Spark Ventures" /></div>
+            <div class="partner-pill"><img src="sponsor-nexa.svg" alt="Nexa Labs" /></div>
+            <div class="partner-pill"><img src="sponsor-orbit.svg" alt="Orbit Technology" /></div>
+          </div>
+          <div class="partner-group" aria-hidden="true">
+            <div class="partner-pill"><img src="sponsor-aurora.svg" alt="Aurora Innovations" /></div>
+            <div class="partner-pill"><img src="sponsor-vantage.svg" alt="Vantage Bio-Sciences" /></div>
+            <div class="partner-pill"><img src="sponsor-spark.svg" alt="Spark Ventures" /></div>
+            <div class="partner-pill"><img src="sponsor-nexa.svg" alt="Nexa Labs" /></div>
+            <div class="partner-pill"><img src="sponsor-orbit.svg" alt="Orbit Technology" /></div>
+          </div>
+        </div>
+      </div>
+        </article>
+      <!-- ==========================================================================
+           Gratitude & Appreciation Section
+           ========================================================================== -->
+      <div class="thankyou-section reveal">
+        <div class="thankyou-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        <span class="section-tag">Gratitude &amp; Appreciation</span>
+        <h2>With Sincere Gratitude to Our Supporters</h2>
+        <p class="thankyou-copy">
+          Behind every workshop, innovation symposium, research exhibition, and student award is the steadfast generosity and mentorship of our supporters. We extend our warmest appreciation to the visionary organizations, institutional patrons, and alumni leaders who invest in our students' potential and help turn curiosity into real-world achievements.
+        </p>
+
+        <div class="thankyou-pillars">
+          <div class="thankyou-pillar-item">
+            <strong>Student Innovation &amp; Research</strong>
+            <p>Direct sponsorship funds laboratory supplies, microcontroller kits, hackathon prize pools, and project exhibitions for budding student researchers.</p>
+          </div>
+
+          <div class="thankyou-pillar-item">
+            <strong>Workshops &amp; Expert Mentorship</strong>
+            <p>Our sponsors and patrons provide industry guidance, jury participation, and technical masterclasses that bridge the gap between textbook science and cutting-edge practice.</p>
+          </div>
+
+          <div class="thankyou-pillar-item">
+            <strong>Inclusive Participation &amp; Awards</strong>
+            <p>Sponsorship funding ensures all university students can participate in flagship festivals, leadership seminars, and technical challenges without economic barriers.</p>
+          </div>
+        </div>
+
+        <div class="thankyou-cta-box">
+          <p>Interested in joining our community of visionary partners and creating lasting campus impact?</p>
+          <a href="contact.html" class="btn btn-primary">Connect With Our Team</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       Site Footer
+       ========================================================================== -->
+  <!-- ==========================================================================
+     Phoenix Club — Reusable Site Footer Component
+     Navrachana University, Vadodara
+     ========================================================================== -->
+<!-- ==========================================================================
+     Phoenix Club — Reusable Site Footer Component
+     Navrachana University, Vadodara
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo-link">
+        <img src="phoenix-club-logo.png" alt="Phoenix Club logo" />
+        <div>
+          <div class="footer-brand-text-title">Phoenix Club</div>
+          <div class="footer-brand-text-sub">Navrachana University, Vadodara</div>
+        </div>
+      </a>
+      <p>A student-led science &amp; innovation community empowering young minds through research curiosity, leadership experiences, and campus collaborations.</p>
+      <div>
+        <a href="/admin/login" class="footer-admin-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Admin Portal Login
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Navigation</h3>
+      <ul class="footer-links">
+        <li><a href="index.html">&#8250; Home</a></li>
+        <li><a href="about.html">&#8250; About Us</a></li>
+        <li><a href="core-team.html">&#8250; Core Leadership</a></li>
+        <li><a href="committee.html">&#8250; Supporting Committee</a></li>
+        <li><a href="upcoming-events.html">&#8250; Upcoming Events</a></li>
+        <li><a href="past-events.html">&#8250; Gallery &amp; Highlights</a></li>
+        <li><a href="past-members.html">&#8250; Alumni &amp; Past Members</a></li>
+        <li><a href="registration.html" style="color: #ea580c; font-weight: 800;">&#8250; Student Registration</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Connect &amp; Engage</h3>
+      <ul class="footer-links">
+        <li><a href="sponsorships.html">&#8250; Sponsorship Packages</a></li>
+        <li><a href="contact.html">&#8250; Contact Desk</a></li>
+        <li style="margin-top: 6px;">
+          <a href="https://www.instagram.com" target="_blank" rel="noreferrer" class="footer-social-pill insta">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            Instagram @phoenixclub
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" class="footer-social-pill linkedin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn Community
+          </a>
+        </li>
+        <li>
+          <a href="mailto:phoenixclub@nuv.ac.in" class="footer-social-pill email">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            phoenixclub@nuv.ac.in
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Campus Location</h3>
+      <div class="map-block">
+        <iframe
+          src="https://www.google.com/maps?q=Navrachana%20University%20Vadodara&z=13&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Navrachana University Vadodara Location"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="footer-copy">
+      <div>
+        &copy; <span id="year">2026</span> Phoenix Club, Navrachana University. All rights reserved.
+      </div>
+      <div class="footer-badge-naac">
+        <span>&#10003;</span> Accredited with Grade &lsquo;A&rsquo; by NAAC
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="navbar.js"></script>
+</body>
+</html>

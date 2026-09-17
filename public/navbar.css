@@ -1,0 +1,6 @@
+/* ============================================================
+   Phoenix Club — Unified Styles Forwarder
+   Redirects to core design system in styles.css
+   ============================================================ */
+
+@import url('styles.css');

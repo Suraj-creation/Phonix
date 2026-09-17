@@ -1,0 +1,2822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Phoenix Club | Navrachana University</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      --bg-dark: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: #131b2e;
+      --bg-card-hover: #19233c;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(234, 88, 12, 0.45);
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --text-muted: #64748b;
+      --primary: #ea580c;
+      --primary-hover: #c2410c;
+      --secondary: #e11d48;
+      --accent-cyan: #0284c7;
+      --accent-green: #10b981;
+      --accent-yellow: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --danger: #ef4444;
+      --sidebar-width: 260px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
+    }
+
+    /* ==========================================================================
+       Sidebar
+       ========================================================================== */
+    .admin-sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      transition: transform 0.25s ease;
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-brand img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 3px;
+      border-radius: 10px;
+    }
+
+    .brand-title-wrap {
+      line-height: 1.2;
+    }
+
+    .brand-title-wrap strong {
+      font-size: 1.05rem;
+      background: linear-gradient(135deg, #fff 30%, #ffedd5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .brand-title-wrap span {
+      font-size: 0.72rem;
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Current Admin Profile Pill in Sidebar */
+    .admin-profile-pill {
+      margin: 16px 14px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-avatar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .admin-profile-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .admin-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .admin-role-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .role-super { background: rgba(249, 115, 22, 0.2); color: #fb923c; }
+    .role-admin { background: rgba(2, 132, 199, 0.2); color: #38bdf8; }
+    .role-viewer { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+    /* Nav Links */
+    .sidebar-menu {
+      list-style: none;
+      padding: 8px 12px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .menu-header {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      padding: 14px 12px 6px;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.18s ease;
+      cursor: pointer;
+    }
+
+    .sidebar-menu a:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+    }
+
+    .sidebar-menu a.active {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(225, 29, 72, 0.15));
+      color: var(--primary);
+      border: 1px solid var(--border-active);
+      font-weight: 700;
+    }
+
+    .sidebar-menu a span.icon {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 14px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-site-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-sub);
+      font-size: 0.82rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn-site-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       Main Content Area
+       ========================================================================== */
+    .admin-main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--bg-dark);
+    }
+
+    /* Top Navbar */
+    .admin-topbar {
+      height: 70px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .page-heading h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .page-heading span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-refresh {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-sub);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-refresh:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Content Area */
+    .admin-content {
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* Tab Sections */
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       KPI Cards Grid
+       ========================================================================== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-active);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .kpi-title {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-icon {
+      font-size: 1.3rem;
+    }
+
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ==========================================================================
+       Charts Grid
+       ========================================================================== */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .chart-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       Data Tables & Filter Toolbars
+       ========================================================================== */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .table-toolbar {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .toolbar-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 9px 14px;
+      color: #fff;
+      font-size: 0.88rem;
+      width: 100%;
+      max-width: 340px;
+      font-family: inherit;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .filter-select {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: #cbd5e1;
+      font-size: 0.84rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      padding: 9px 18px; /* 1:2 vertical to horizontal ratio */
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 0.84rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary-action {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+    .btn-primary-action:hover {
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary-action {
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary-action:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .btn-export-csv {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+    .btn-export-csv:hover {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .btn-export-excel {
+      background: rgba(2, 132, 199, 0.15);
+      border: 1px solid rgba(2, 132, 199, 0.35);
+      color: #7dd3fc;
+    }
+    .btn-export-excel:hover {
+      background: #0284c7;
+      color: #fff;
+    }
+
+    /* Data Table */
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    table.data-table th {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 16px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    table.data-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: #cbd5e1;
+      vertical-align: middle;
+    }
+
+    table.data-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-confirmed { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-registered { background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.3); }
+    .badge-cancelled { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-waitlist { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .badge-att-present { background: #15803d; color: #ffffff; cursor: pointer; }
+    .badge-att-absent { background: #b91c1c; color: #ffffff; cursor: pointer; }
+    .badge-att-pending { background: #475569; color: #f1f5f9; cursor: pointer; }
+
+    /* Action Icon Buttons */
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--border-color);
+      color: #cbd5e1;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .btn-icon.delete:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #fff;
+    }
+
+    /* Pagination */
+    .table-pagination {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.01);
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .pagination-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pagination-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: #cbd5e1;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .pagination-btn:not(:disabled):hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       Modals
+       ========================================================================== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .modal-header h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .btn-close-modal-x {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .btn-close-modal-x:hover { color: #fff; }
+
+    .modal-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .modal-form-full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 0.88rem;
+      font-family: inherit;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    /* ==========================================================================
+       Toast Notifications
+       ========================================================================== */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast-card {
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+      min-width: 280px;
+    }
+
+    .toast-card.success { border-left-color: #10b981; }
+    .toast-card.error { border-left-color: #ef4444; }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* ==========================================================================
+       Responsive Media Queries
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+      }
+      .admin-sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      .admin-main {
+        margin-left: 0;
+      }
+      .mobile-menu-toggle {
+        display: block;
+      }
+      .admin-content {
+        padding: 18px 14px;
+      }
+      .table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .modal-form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Admin Sidebar
+       ========================================================================== -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-brand">
+      <img src="/phoenix-club-logo.png" alt="Phoenix Club emblem" />
+      <div class="brand-title-wrap">
+        <strong>Phoenix Club</strong>
+        <span>Admin Suite 2026</span>
+      </div>
+    </div>
+
+    <!-- Active Admin Info Pill -->
+    <div class="admin-profile-pill">
+      <div class="admin-avatar-icon" id="adminAvatarLetter">A</div>
+      <div class="admin-profile-info">
+        <div class="admin-name" id="sidebarAdminName">{{ admin.full_name or admin.username }}</div>
+        <span class="admin-role-badge {% if admin.role == 'Super Admin' %}role-super{% elif admin.role == 'Admin' %}role-admin{% else %}role-viewer{% endif %}">
+          {{ admin.role }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <ul class="sidebar-menu">
+      <div class="menu-header">Main Overview</div>
+      <li>
+        <a class="nav-item active" data-tab="tab-overview" onclick="switchTab('tab-overview')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span> Dashboard Analytics
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="tab-events" onclick="switchTab('tab-events')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span> Events Management
+        </a>
+      </li>
+
+      <div class="menu-header">Registrations</div>
+      <li>
+        <a class="nav-item" data-tab="tab-registrations" onclick="switchTab('tab-registrations')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span> All Registrations
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="tab-event-drilldown" onclick="switchTab('tab-event-drilldown')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span> Event-Specific View
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="tab-students" onclick="switchTab('tab-students')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span> Student Directory
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="tab-attendance" onclick="switchTab('tab-attendance')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></span> Attendance Kiosk
+        </a>
+      </li>
+
+      <div class="menu-header">Auditing &amp; Security</div>
+      <li>
+        <a class="nav-item" data-tab="tab-logs" onclick="switchTab('tab-logs')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span> Activity Audit Logs
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="tab-settings" onclick="switchTab('tab-settings')">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span> Settings &amp; Admins
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="/" target="_blank" class="btn-site-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg> Open Public Website &rarr;
+      </a>
+      <button type="button" class="btn-logout" onclick="handleAdminLogout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Logout Session
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       Main Dashboard App Area
+       ========================================================================== -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu-toggle" onclick="toggleMobileSidebar()" aria-label="Toggle Navigation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="page-heading">
+          <h1 id="pageTitle">Dashboard Analytics</h1>
+          <span id="pageSubtitle">Live university registration statistics &bull; Academic Year 2026</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button type="button" class="btn-refresh" onclick="refreshCurrentView()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg> Refresh Data
+        </button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- ======================================================================
+           TAB 1: DASHBOARD OVERVIEW & ANALYTICS
+           ====================================================================== -->
+      <section id="tab-overview" class="tab-section active">
+        <!-- KPI Cards Grid -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Total Registrations</span>
+              <span class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+            </div>
+            <div class="kpi-value" id="kpiTotalReg">-</div>
+            <div class="kpi-sub" id="kpiRegToday">Today: -</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Active Events</span>
+              <span class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+            </div>
+            <div class="kpi-value" id="kpiActiveEvents">-</div>
+            <div class="kpi-sub" id="kpiTotalEvents">Total Events: -</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Unique Students</span>
+              <span class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+            </div>
+            <div class="kpi-value" id="kpiTotalStudents">-</div>
+            <div class="kpi-sub">Across All Departments</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Attendance Rate</span>
+              <span class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></span>
+            </div>
+            <div class="kpi-value" id="kpiAttendanceRate">-%</div>
+            <div class="kpi-sub" id="kpiPresentCount">Present: -</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Pending Attendance</span>
+              <span class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+            </div>
+            <div class="kpi-value" id="kpiPendingCount">-</div>
+            <div class="kpi-sub">Awaiting Event Check-In</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px; vertical-align:-2px;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>Registrations Timeline</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartTimeline"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px; vertical-align:-2px;"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>Attendance Breakdown</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartAttendance"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px; vertical-align:-2px;"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Event-Wise Registrations vs Capacity</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartEvents"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px; vertical-align:-2px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line><line x1="9" y1="6" x2="9" y2="6.01"></line><line x1="15" y1="6" x2="15" y2="6.01"></line><line x1="9" y1="10" x2="9" y2="10.01"></line><line x1="15" y1="10" x2="15" y2="10.01"></line><line x1="9" y1="14" x2="9" y2="14.01"></line><line x1="15" y1="14" x2="15" y2="14.01"></line><line x1="9" y1="18" x2="9" y2="18.01"></line><line x1="15" y1="18" x2="15" y2="18.01"></line></svg>Department Distribution</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chartDepartments"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 2: EVENTS MANAGEMENT
+           ====================================================================== -->
+      <section id="tab-events" class="tab-section">
+        <div class="table-container">
+          <div class="table-toolbar">
+            <div class="toolbar-search-wrap">
+              <strong style="font-size: 1.1rem; color: #fff;">Phoenix Club Events Directory</strong>
+            </div>
+            <div class="toolbar-actions">
+              {% if admin.role in ['Super Admin', 'Admin'] %}
+              <button type="button" class="btn-action btn-primary-action" onclick="openCreateEventModal()">
+                <span>+</span> Create New Event
+              </button>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="data-table" id="eventsTable">
+              <thead>
+                <tr>
+                  <th>Event Code</th>
+                  <th>Title &amp; Category</th>
+                  <th>Date &amp; Time</th>
+                  <th>Venue</th>
+                  <th>Capacity</th>
+                  <th>Total Registered</th>
+                  <th>Attendance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="eventsTableBody">
+                <tr><td colspan="9" style="text-align: center; padding: 30px;">Loading events...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 3: REGISTRATIONS MANAGEMENT
+           ====================================================================== -->
+      <section id="tab-registrations" class="tab-section">
+        <div class="table-container">
+          <!-- Toolbar with Search & Multi-Filters -->
+          <div class="table-toolbar">
+            <div class="toolbar-search-wrap">
+              <input
+                type="text"
+                class="search-input"
+                id="regSearchInput"
+                placeholder="Search name, enrollment ID, email, phone..."
+                oninput="debounceRegSearch()"
+              />
+              <select class="filter-select" id="regEventFilter" onchange="loadRegistrations()">
+                <option value="">All Events</option>
+              </select>
+              <select class="filter-select" id="regDeptFilter" onchange="loadRegistrations()">
+                <option value="">All Schools</option>
+                <option value="School of Science">School of Science</option>
+                <option value="School of Engineering & Technology">School of Engineering &amp; Technology</option>
+                <option value="School of Environmental Design & Architecture">School of Design &amp; Architecture</option>
+                <option value="School of Business & Law">School of Business &amp; Law</option>
+                <option value="School of Liberal Arts & Education">School of Liberal Arts</option>
+              </select>
+              <select class="filter-select" id="regAttendanceFilter" onchange="loadRegistrations()">
+                <option value="">Attendance: All</option>
+                <option value="present">Present Only</option>
+                <option value="absent">Absent Only</option>
+                <option value="pending">Pending Only</option>
+              </select>
+            </div>
+
+            <div class="toolbar-actions">
+              <button type="button" class="btn-action btn-export-csv" onclick="exportData('csv')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Export CSV
+              </button>
+              <button type="button" class="btn-action btn-export-excel" onclick="exportData('excel')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="17"></line><line x1="16" y1="13" x2="8" y2="17"></line></svg> Export Excel (.xlsx)
+              </button>
+              {% if admin.role in ['Super Admin', 'Admin'] %}
+              <button type="button" class="btn-action btn-primary-action" onclick="openManualRegModal()">
+                <span>+</span> Add Registration
+              </button>
+              {% endif %}
+              <button type="button" class="btn-action btn-secondary-action" id="archiveToggleBtn" onclick="toggleArchiveView()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg> View Archived
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Reg ID</th>
+                  <th>Student Name</th>
+                  <th>Enrollment ID</th>
+                  <th>School</th>
+                  <th>Year</th>
+                  <th>Email &amp; Phone</th>
+                  <th>Event Name</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Attendance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="registrationsTableBody">
+                <tr><td colspan="11" style="text-align: center; padding: 30px;">Loading registrations...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="table-pagination">
+            <span id="paginationInfo">Showing 0 of 0 records</span>
+            <div class="pagination-btns">
+              <button type="button" class="pagination-btn" id="btnPrevPage" onclick="changeRegPage(-1)">&larr; Prev</button>
+              <button type="button" class="pagination-btn" id="btnNextPage" onclick="changeRegPage(1)">Next &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 4: EVENT-SPECIFIC DASHBOARD DRILL-DOWN (Requirement 8)
+           ====================================================================== -->
+      <section id="tab-event-drilldown" class="tab-section">
+        <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <label style="font-weight: 800; font-size: 0.95rem; color: #fff;">Select Event to Inspect:</label>
+          <select class="filter-select" id="drilldownEventSelect" style="min-width: 320px;" onchange="loadEventDrilldown()">
+            <option value="">Choose an Event...</option>
+          </select>
+        </div>
+
+        <div id="drilldownContent" style="display: none;">
+          <!-- Event Header Banner -->
+          <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="badge" style="background: rgba(249, 115, 22, 0.2); color: #fb923c; margin-bottom: 8px;" id="drilldownCategory">Flagship</span>
+                <h2 style="font-size: 1.6rem; color: #fff; margin: 4px 0;" id="drilldownTitle">Investiture Ceremony 2026</h2>
+                <p style="color: var(--text-sub); font-size: 0.9rem;" id="drilldownDesc">Official student council pinning ceremony.</p>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; justify-content: flex-end; gap: 4px;" id="drilldownVenue">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>NUV Main Auditorium</span>
+                </div>
+                <div style="font-size: 1rem; font-weight: 800; color: #fb923c; margin-top: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 4px;" id="drilldownDateTime">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>16 Sep 2026 | 10:00 AM</span>
+                </div>
+                <button type="button" class="btn-action btn-secondary-action" style="margin-top: 10px;" onclick="viewEventFilteredRegistrations()">
+                  Filter Registrations for this Event &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drilldown KPIs -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span class="kpi-title">Total Registered</span>
+              <div class="kpi-value" id="drilldownTotal">-</div>
+              <div class="kpi-sub" id="drilldownCapacityMeter">Capacity: -</div>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Present Students</span>
+              <div class="kpi-value" style="color: #34d399;" id="drilldownPresent">-</div>
+              <div class="kpi-sub" id="drilldownAttRate">Rate: -%</div>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Absent Students</span>
+              <div class="kpi-value" style="color: #f87171;" id="drilldownAbsent">-</div>
+              <div class="kpi-sub">Did Not Attend</div>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Pending Check-Ins</span>
+              <div class="kpi-value" style="color: #fbbf24;" id="drilldownPending">-</div>
+              <div class="kpi-sub">Awaiting Entry</div>
+            </div>
+          </div>
+
+          <!-- Drilldown Charts -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <span class="chart-title">Department Representation</span>
+              <div class="chart-wrap">
+                <canvas id="chartDrilldownDept"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <span class="chart-title">Academic Year Distribution</span>
+              <div class="chart-wrap">
+                <canvas id="chartDrilldownYear"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 5: STUDENT RECORDS DIRECTORY (Requirement 12)
+           ====================================================================== -->
+      <section id="tab-students" class="tab-section">
+        <div class="table-container">
+          <div class="table-toolbar">
+            <div class="toolbar-search-wrap">
+              <input
+                type="text"
+                class="search-input"
+                id="studentSearchInput"
+                placeholder="Search student by name, enrollment ID, email..."
+                oninput="debounceStudentSearch()"
+              />
+            </div>
+            <div class="toolbar-actions">
+              <span style="font-size: 0.85rem; color: var(--text-muted);" id="studentTotalCount">Total Students: -</span>
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Enrollment ID</th>
+                  <th>Full Name</th>
+                  <th>School / Department</th>
+                  <th>Year</th>
+                  <th>Email &amp; Phone</th>
+                  <th>Events Registered</th>
+                  <th>Events Attended</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+                <tr><td colspan="8" style="text-align: center; padding: 30px;">Loading student records...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 6: ATTENDANCE KIOSK (QUICK CHECK-IN)
+           ====================================================================== -->
+      <section id="tab-attendance" class="tab-section">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px; max-width: 800px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; margin-bottom: 8px;">Fast-Track Check-In</span>
+            <h2 style="font-size: 1.5rem; color: #fff;">Event Day Attendance Kiosk</h2>
+            <p style="color: var(--text-sub); font-size: 0.88rem;">Search by Enrollment ID or Scan Registration Pass ID for instant 1-click check-in.</p>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+            <select class="filter-select" id="kioskEventSelect" style="flex: 1;">
+              <option value="">Select Event...</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-bottom: 24px;">
+            <input
+              type="text"
+              class="form-input"
+              id="kioskSearchInput"
+              placeholder="Type student Enrollment ID (e.g. 240101001) or Pass ID (PHX-2026-...)"
+              style="font-size: 1rem; padding: 12px 16px;"
+              onkeyup="if(event.key === 'Enter') handleKioskSearch()"
+            />
+            <button type="button" class="btn-action btn-primary-action" onclick="handleKioskSearch()">
+              Find Student
+            </button>
+          </div>
+
+          <!-- Kiosk Result Card -->
+          <div id="kioskResult" style="display: none; padding: 20px; border-radius: 14px; background: var(--bg-surface); border: 1px solid var(--border-color);">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 7: ACTIVITY AUDIT LOGS (Requirement 13)
+           ====================================================================== -->
+      <section id="tab-logs" class="tab-section">
+        <div class="table-container">
+          <div class="table-toolbar">
+            <div class="toolbar-search-wrap">
+              <strong style="font-size: 1.1rem; color: #fff;">Administrator Audit &amp; Activity Log</strong>
+            </div>
+            <div class="toolbar-actions">
+              <input
+                type="text"
+                class="search-input"
+                id="logSearchInput"
+                placeholder="Search audit actions or admin names..."
+                oninput="debounceLogSearch()"
+              />
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Administrator</th>
+                  <th>Action</th>
+                  <th>Record Type</th>
+                  <th>Details</th>
+                  <th>IP Address</th>
+                </tr>
+              </thead>
+              <tbody id="logsTableBody">
+                <tr><td colspan="6" style="text-align: center; padding: 30px;">Loading activity logs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 8: SETTINGS & ADMIN MANAGEMENT (Requirement 16)
+           ====================================================================== -->
+      <section id="tab-settings" class="tab-section">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+
+          <!-- Change Password Card -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px;">
+            <h3 style="margin-bottom: 16px; color: #fff; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Change Password
+            </h3>
+            <form onsubmit="handleChangePasswordSubmit(event)">
+              <div style="margin-bottom: 14px;">
+                <label class="form-label">Current Password</label>
+                <input type="password" id="currentPass" class="form-input" required />
+              </div>
+              <div style="margin-bottom: 18px;">
+                <label class="form-label">New Password (Min 6 chars)</label>
+                <input type="password" id="newPass" class="form-input" required minlength="6" />
+              </div>
+              <button type="submit" class="btn-action btn-primary-action">Update Password</button>
+            </form>
+          </div>
+
+          <!-- Data Backup & Reset (Super Admin only) -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px;">
+            <h3 style="margin-bottom: 16px; color: #fff; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              Database Backup &amp; Demo Manager
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px;">
+              Create timestamped snapshots of the production database or manage isolated demo testing data.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              {% if admin.role == 'Super Admin' %}
+              <a href="/api/admin/backup-db" class="btn-action btn-secondary-action" style="text-decoration: none; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download SQLite Database Backup (.db)
+              </a>
+              <button type="button" class="btn-action btn-secondary-action" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;" onclick="handleSeedDemo()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Seed Demo Registrations (Test Mode)
+              </button>
+              <button type="button" class="btn-action btn-secondary-action" style="color: #fca5a5; border-color: rgba(239, 68, 68, 0.4); display: inline-flex; align-items: center; justify-content: center; gap: 6px;" onclick="handleClearDemo()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Clear All Demo Registrations
+              </button>
+              {% else %}
+              <p style="font-size: 0.85rem; color: #fb923c;">Only Super Admin can trigger database backups and demo resets.</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Super Admin Administrator Management -->
+          {% if admin.role == 'Super Admin' %}
+          <div style="grid-column: 1 / -1; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+              <h3 style="color: #fff; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Administrator Accounts &amp; Permissions
+              </h3>
+              <button type="button" class="btn-action btn-primary-action" onclick="openCreateAdminModal()">+ New Admin</button>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Login</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminUsersTableBody">
+                  <tr><td colspan="7" style="text-align: center; padding: 20px;">Loading admin users...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODALS
+       ========================================================================== -->
+
+  <!-- 1. Create/Edit Event Modal -->
+  <div class="modal-backdrop" id="eventModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="eventModalTitle">Create New Event</h3>
+        <button type="button" class="btn-close-modal-x" onclick="closeModal('eventModal')">&times;</button>
+      </div>
+      <form id="eventForm" onsubmit="handleSaveEventSubmit(event)">
+        <input type="hidden" id="eventEditId" />
+        <div class="modal-form-grid">
+          <div class="modal-form-full">
+            <label class="form-label">Event Title *</label>
+            <input type="text" id="eventInputTitle" class="form-input" placeholder="e.g. Wildlife Week 2026" required />
+          </div>
+          <div>
+            <label class="form-label">Category *</label>
+            <input type="text" id="eventInputCategory" class="form-input" placeholder="e.g. Flagship / Workshop / Guest Lecture" required />
+          </div>
+          <div>
+            <label class="form-label">Event Code (Optional)</label>
+            <input type="text" id="eventInputCode" class="form-input" placeholder="e.g. EVT-WILDLIFE-2026" />
+          </div>
+          <div>
+            <label class="form-label">Event Date *</label>
+            <input type="date" id="eventInputDate" class="form-input" required />
+          </div>
+          <div>
+            <label class="form-label">Event Time *</label>
+            <input type="text" id="eventInputTime" class="form-input" placeholder="e.g. 11:30 AM" required />
+          </div>
+          <div class="modal-form-full">
+            <label class="form-label">Campus Venue *</label>
+            <input type="text" id="eventInputVenue" class="form-input" placeholder="e.g. Central Courtyard & Amphitheatre" required />
+          </div>
+          <div>
+            <label class="form-label">Max Capacity (0 = Unlimited)</label>
+            <input type="number" id="eventInputCapacity" class="form-input" value="0" min="0" />
+          </div>
+          <div>
+            <label class="form-label">Active / Publicly Open</label>
+            <select id="eventInputActive" class="form-input">
+              <option value="1">Open for Registration</option>
+              <option value="0">Closed / Disabled</option>
+            </select>
+          </div>
+          <div class="modal-form-full">
+            <label class="form-label">Description / Details</label>
+            <textarea id="eventInputDesc" class="form-input" rows="3" placeholder="Overview of the event, agenda, etc."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action btn-secondary-action" onclick="closeModal('eventModal')">Cancel</button>
+          <button type="submit" class="btn-action btn-primary-action">Save Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Manual Add / Edit Registration Modal -->
+  <div class="modal-backdrop" id="regModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="regModalTitle">Add Student Registration</h3>
+        <button type="button" class="btn-close-modal-x" onclick="closeModal('regModal')">&times;</button>
+      </div>
+      <form id="regForm" onsubmit="handleSaveRegSubmit(event)">
+        <input type="hidden" id="regEditId" />
+        <div class="modal-form-grid">
+          <div>
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="regInputName" class="form-input" placeholder="Student Full Name" required />
+          </div>
+          <div>
+            <label class="form-label">Enrollment / Roll No. *</label>
+            <input type="text" id="regInputRoll" class="form-input" placeholder="e.g. 240101001" required />
+          </div>
+          <div>
+            <label class="form-label">School / Department *</label>
+            <select id="regInputDept" class="form-input" required>
+              <option value="School of Science">School of Science</option>
+              <option value="School of Engineering & Technology">School of Engineering &amp; Technology</option>
+              <option value="School of Environmental Design & Architecture">School of Design &amp; Architecture</option>
+              <option value="School of Business & Law">School of Business &amp; Law</option>
+              <option value="School of Liberal Arts & Education">School of Liberal Arts</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Academic Year *</label>
+            <select id="regInputYear" class="form-input" required>
+              <option value="1st Year (Freshman)">1st Year (Freshman)</option>
+              <option value="2nd Year (Sophomore)">2nd Year (Sophomore)</option>
+              <option value="3rd Year (Junior)">3rd Year (Junior)</option>
+              <option value="4th Year (Senior)">4th Year (Senior)</option>
+              <option value="Postgraduate / Masters">Postgraduate / Masters</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Email *</label>
+            <input type="email" id="regInputEmail" class="form-input" placeholder="student@nuv.ac.in" required />
+          </div>
+          <div>
+            <label class="form-label">Phone *</label>
+            <input type="tel" id="regInputPhone" class="form-input" placeholder="+91 98765 43210" required />
+          </div>
+          <div class="modal-form-full">
+            <label class="form-label">Target Event *</label>
+            <select id="regInputEvent" class="form-input" required></select>
+          </div>
+          <div>
+            <label class="form-label">Registration Status</label>
+            <select id="regInputStatus" class="form-input">
+              <option value="confirmed">Confirmed</option>
+              <option value="registered">Registered</option>
+              <option value="waitlist">Waitlist</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Attendance Status</label>
+            <select id="regInputAttendance" class="form-input">
+              <option value="pending">Pending</option>
+              <option value="present">Present</option>
+              <option value="absent">Absent</option>
+            </select>
+          </div>
+          <div class="modal-form-full">
+            <label class="form-label">Additional Notes</label>
+            <textarea id="regInputNotes" class="form-input" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action btn-secondary-action" onclick="closeModal('regModal')">Cancel</button>
+          <button type="submit" class="btn-action btn-primary-action">Save Registration</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. View Registration Details Modal -->
+  <div class="modal-backdrop" id="viewRegModal">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3>Registration Pass Details</h3>
+        <button type="button" class="btn-close-modal-x" onclick="closeModal('viewRegModal')">&times;</button>
+      </div>
+      <div id="viewRegContent" style="font-size: 0.92rem; line-height: 1.8;">
+        <!-- Populated via JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-action btn-secondary-action" onclick="closeModal('viewRegModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Student Full Participation History Modal (Requirement 12) -->
+  <div class="modal-backdrop" id="studentHistoryModal">
+    <div class="modal-box" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 id="studentHistoryTitle">Student Profile &amp; History</h3>
+        <button type="button" class="btn-close-modal-x" onclick="closeModal('studentHistoryModal')">&times;</button>
+      </div>
+      <div id="studentHistorySummary" style="margin-bottom: 20px; padding: 16px; background: var(--bg-surface); border-radius: 12px;"></div>
+      <h4 style="color: #fff; margin-bottom: 12px; font-size: 1rem;">Chronological Event Participation:</h4>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Pass ID</th>
+              <th>Event Title</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Attendance</th>
+            </tr>
+          </thead>
+          <tbody id="studentHistoryTableBody"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-action btn-secondary-action" onclick="closeModal('studentHistoryModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Create Admin Account Modal (Super Admin Only) -->
+  <div class="modal-backdrop" id="adminUserModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Add Administrator</h3>
+        <button type="button" class="btn-close-modal-x" onclick="closeModal('adminUserModal')">&times;</button>
+      </div>
+      <form onsubmit="handleCreateAdminSubmit(event)">
+        <div class="modal-form-grid">
+          <div>
+            <label class="form-label">Username *</label>
+            <input type="text" id="newAdminUser" class="form-input" required />
+          </div>
+          <div>
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="newAdminName" class="form-input" required />
+          </div>
+          <div>
+            <label class="form-label">University Email *</label>
+            <input type="email" id="newAdminEmail" class="form-input" required />
+          </div>
+          <div>
+            <label class="form-label">Assigned Role *</label>
+            <select id="newAdminRole" class="form-input" required>
+              <option value="Admin">Admin (Events &amp; Registrations)</option>
+              <option value="Viewer">Viewer (Read-Only)</option>
+              <option value="Super Admin">Super Admin (Full Access)</option>
+            </select>
+          </div>
+          <div class="modal-form-full">
+            <label class="form-label">Temporary Password *</label>
+            <input type="password" id="newAdminPass" class="form-input" required minlength="6" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action btn-secondary-action" onclick="closeModal('adminUserModal')">Cancel</button>
+          <button type="submit" class="btn-action btn-primary-action">Create Administrator</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       Dashboard JavaScript Client
+       ========================================================================== -->
+  <script>
+    // State
+    const currentUserRole = "{{ admin.role }}";
+    let currentRegPage = 1;
+    let isViewingArchived = false;
+    let chartInstances = {};
+    let debounceTimer = null;
+
+    // Toast Notification helper
+    function showToast(message, type = 'success') {
+      const c = document.getElementById('toastContainer');
+      const card = document.createElement('div');
+      card.className = `toast-card ${type}`;
+      const icon = type === 'success' 
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px; vertical-align:-2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px; vertical-align:-2px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+      card.innerHTML = `${icon}<span>${message}</span>`;
+      c.appendChild(card);
+      setTimeout(() => {
+        card.style.opacity = '0';
+        card.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => card.remove(), 300);
+      }, 3200);
+    }
+
+    // Modal Helpers
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    // Sidebar Mobile Toggle
+    function toggleMobileSidebar() {
+      document.getElementById('adminSidebar').classList.toggle('mobile-open');
+    }
+
+    // Tab Navigation
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+
+      const nav = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+      if (nav) nav.classList.add('active');
+
+      // Update page headers
+      const titleMap = {
+        'tab-overview': ['Dashboard Analytics', 'Live university registration statistics &bull; Academic Year 2026'],
+        'tab-events': ['Events Management', 'Create, update, and manage official Phoenix Club campus initiatives'],
+        'tab-registrations': ['Student Registrations', 'Full database of attendees, enrollment verification & attendance tracking'],
+        'tab-event-drilldown': ['Event-Specific Analytics', 'Deep breakdown by department, attendance ratio, and timeline'],
+        'tab-students': ['Student Directory', 'Master student profiles & Phoenix Club participation history'],
+        'tab-attendance': ['Attendance Kiosk', 'Fast-track check-in desk for event entry validation'],
+        'tab-logs': ['Activity Audit Logs', 'Complete audit trail of all administrative and registration actions'],
+        'tab-settings': ['Settings &amp; Admins', 'Role-based access control, security, backups, and configurations']
+      };
+
+      if (titleMap[tabId]) {
+        document.getElementById('pageTitle').innerHTML = titleMap[tabId][0];
+        document.getElementById('pageSubtitle').innerHTML = titleMap[tabId][1];
+      }
+
+      // Close mobile drawer
+      document.getElementById('adminSidebar').classList.remove('mobile-open');
+
+      // Trigger lazy loads
+      if (tabId === 'tab-overview') loadAnalyticsOverview();
+      else if (tabId === 'tab-events') loadEvents();
+      else if (tabId === 'tab-registrations') loadRegistrations();
+      else if (tabId === 'tab-event-drilldown') initEventDrilldown();
+      else if (tabId === 'tab-students') loadStudents();
+      else if (tabId === 'tab-attendance') initAttendanceKiosk();
+      else if (tabId === 'tab-logs') loadLogs();
+      else if (tabId === 'tab-settings' && currentUserRole === 'Super Admin') loadAdminUsers();
+    }
+
+    function refreshCurrentView() {
+      const activeTab = document.querySelector('.tab-section.active');
+      if (activeTab) switchTab(activeTab.id);
+      showToast('Dashboard refreshed with latest data');
+    }
+
+    // ==========================================================================
+    // Analytics & Overview
+    // ==========================================================================
+    async function loadAnalyticsOverview() {
+      try {
+        const res = await fetch('/api/admin/analytics/overview');
+        const data = await res.json();
+        if (!res.ok) return;
+
+        // Fill KPIs
+        const k = data.kpis;
+        document.getElementById('kpiTotalReg').textContent = k.total_registrations;
+        document.getElementById('kpiRegToday').textContent = `Today: ${k.registrations_today}`;
+        document.getElementById('kpiActiveEvents').textContent = k.active_events;
+        document.getElementById('kpiTotalEvents').textContent = `Total Events: ${k.total_events}`;
+        document.getElementById('kpiTotalStudents').textContent = k.total_students;
+        document.getElementById('kpiAttendanceRate').textContent = `${k.attendance_rate}%`;
+        document.getElementById('kpiPresentCount').textContent = `Present: ${k.total_present} | Absent: ${k.total_absent}`;
+        document.getElementById('kpiPendingCount').textContent = k.total_pending;
+
+        // Render Charts
+        renderTimelineChart(data.charts.timeline);
+        renderAttendanceChart(data.charts.attendance_stats);
+        renderEventsChart(data.charts.event_distribution);
+        renderDeptChart(data.charts.dept_distribution);
+      } catch (e) {
+        console.error('Error loading analytics:', e);
+      }
+    }
+
+    function renderTimelineChart(timeline) {
+      const ctx = document.getElementById('chartTimeline').getContext('2d');
+      if (chartInstances.timeline) chartInstances.timeline.destroy();
+
+      const labels = timeline.map(t => t.reg_date);
+      const values = timeline.map(t => t.count);
+
+      chartInstances.timeline = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels.length ? labels : ['No data yet'],
+          datasets: [{
+            label: 'Registrations',
+            data: values.length ? values : [0],
+            borderColor: '#f97316',
+            backgroundColor: 'rgba(249, 115, 22, 0.12)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 3,
+            pointBackgroundColor: '#ea580c',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', stepSize: 1 } }
+          }
+        }
+      });
+    }
+
+    function renderAttendanceChart(stats) {
+      const ctx = document.getElementById('chartAttendance').getContext('2d');
+      if (chartInstances.attendance) chartInstances.attendance.destroy();
+
+      chartInstances.attendance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Present', 'Absent', 'Pending'],
+          datasets: [{
+            data: [stats.present, stats.absent, stats.pending],
+            backgroundColor: ['#10b981', '#ef4444', '#64748b'],
+            borderWidth: 2,
+            borderColor: '#162032'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 14 } }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    function renderEventsChart(events) {
+      const ctx = document.getElementById('chartEvents').getContext('2d');
+      if (chartInstances.events) chartInstances.events.destroy();
+
+      const labels = events.map(e => e.title.length > 20 ? e.title.slice(0, 18) + '...' : e.title);
+      const regs = events.map(e => e.reg_count);
+      const caps = events.map(e => e.capacity);
+
+      chartInstances.events = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Registrations',
+              data: regs,
+              backgroundColor: '#f97316',
+              borderRadius: 6
+            },
+            {
+              label: 'Capacity Target',
+              data: caps,
+              backgroundColor: 'rgba(255, 255, 255, 0.12)',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top', labels: { color: '#cbd5e1' } } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+    }
+
+    function renderDeptChart(depts) {
+      const ctx = document.getElementById('chartDepartments').getContext('2d');
+      if (chartInstances.dept) chartInstances.dept.destroy();
+
+      const labels = depts.map(d => d.department.replace('School of ', ''));
+      const values = depts.map(d => d.count);
+
+      chartInstances.dept = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: [
+              'rgba(249, 115, 22, 0.7)',
+              'rgba(2, 132, 199, 0.7)',
+              'rgba(139, 92, 246, 0.7)',
+              'rgba(245, 158, 11, 0.7)',
+              'rgba(16, 185, 129, 0.7)'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1' } } },
+          scales: {
+            r: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { display: false } }
+          }
+        }
+      });
+    }
+
+    // ==========================================================================
+    // Events Management
+    // ==========================================================================
+    let cachedEvents = [];
+
+    async function loadEvents() {
+      try {
+        const res = await fetch('/api/admin/events');
+        const data = await res.json();
+        cachedEvents = data.events || [];
+
+        const tbody = document.getElementById('eventsTableBody');
+        if (!cachedEvents.length) {
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 30px;">No events created yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = cachedEvents.map(e => {
+          const capText = e.capacity > 0 ? e.capacity : 'Unlimited';
+          const isFull = e.capacity > 0 && e.total_registered >= e.capacity;
+          const statusBadge = e.is_active ? (isFull ? '<span class="badge badge-waitlist">Full</span>' : '<span class="badge badge-confirmed">Open</span>') : '<span class="badge badge-cancelled">Closed</span>';
+          const canEdit = currentUserRole !== 'Viewer';
+
+          return `
+            <tr>
+              <td><strong style="color: #f97316; font-family: monospace;">${e.code}</strong></td>
+              <td>
+                <div style="font-weight: 700; color: #fff;">${e.title}</div>
+                <div style="font-size: 0.76rem; color: var(--text-muted);">${e.category}</div>
+              </td>
+              <td>${e.event_date}<br><small style="color: var(--text-muted);">${e.event_time}</small></td>
+              <td>${e.venue}</td>
+              <td>${capText}</td>
+              <td><strong>${e.total_registered}</strong></td>
+              <td><span style="color: #34d399;">${e.present_count || 0} Present</span></td>
+              <td>${statusBadge}</td>
+              <td>
+                <div class="table-actions">
+                  <button type="button" class="btn-icon" title="View Event Analytics" onclick="openEventDrilldownDirect(${e.id})">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                  </button>
+                  ${canEdit ? `
+                    <button type="button" class="btn-icon" title="Edit Event" onclick="openEditEventModal(${e.id})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                    </button>
+                  ` : ''}
+                  ${canEdit ? `
+                    <button type="button" class="btn-icon delete" title="Archive Event" onclick="archiveEvent(${e.id})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  ` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Also populate event dropdowns
+        populateEventDropdowns();
+      } catch (err) {
+        console.error('Error loading events:', err);
+      }
+    }
+
+    function populateEventDropdowns() {
+      const regSelect = document.getElementById('regEventFilter');
+      const modalSelect = document.getElementById('regInputEvent');
+      const drillSelect = document.getElementById('drilldownEventSelect');
+      const kioskSelect = document.getElementById('kioskEventSelect');
+
+      const optionsHtml = cachedEvents.map(e => `<option value="${e.id}">${e.title}</option>`).join('');
+
+      if (regSelect) regSelect.innerHTML = '<option value="">All Events</option>' + optionsHtml;
+      if (modalSelect) modalSelect.innerHTML = optionsHtml;
+      if (drillSelect) drillSelect.innerHTML = '<option value="">Choose an Event...</option>' + optionsHtml;
+      if (kioskSelect) kioskSelect.innerHTML = '<option value="">Select Event...</option>' + optionsHtml;
+    }
+
+    function openCreateEventModal() {
+      document.getElementById('eventForm').reset();
+      document.getElementById('eventEditId').value = '';
+      document.getElementById('eventModalTitle').textContent = 'Create New Event';
+      openModal('eventModal');
+    }
+
+    function openEditEventModal(eventId) {
+      const ev = cachedEvents.find(e => e.id === eventId);
+      if (!ev) return;
+
+      document.getElementById('eventEditId').value = ev.id;
+      document.getElementById('eventInputTitle').value = ev.title;
+      document.getElementById('eventInputCategory').value = ev.category;
+      document.getElementById('eventInputCode').value = ev.code;
+      document.getElementById('eventInputDate').value = ev.event_date;
+      document.getElementById('eventInputTime').value = ev.event_time;
+      document.getElementById('eventInputVenue').value = ev.venue;
+      document.getElementById('eventInputCapacity').value = ev.capacity;
+      document.getElementById('eventInputActive').value = ev.is_active;
+      document.getElementById('eventInputDesc').value = ev.description || '';
+
+      document.getElementById('eventModalTitle').textContent = 'Edit Event';
+      openModal('eventModal');
+    }
+
+    async function handleSaveEventSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('eventEditId').value;
+      const payload = {
+        title: document.getElementById('eventInputTitle').value.trim(),
+        category: document.getElementById('eventInputCategory').value.trim(),
+        code: document.getElementById('eventInputCode').value.trim(),
+        event_date: document.getElementById('eventInputDate').value,
+        event_time: document.getElementById('eventInputTime').value.trim(),
+        venue: document.getElementById('eventInputVenue').value.trim(),
+        capacity: parseInt(document.getElementById('eventInputCapacity').value) || 0,
+        is_active: parseInt(document.getElementById('eventInputActive').value) === 1,
+        description: document.getElementById('eventInputDesc').value.trim()
+      };
+
+      const url = id ? `/api/admin/events/${id}` : '/api/admin/events';
+      const method = id ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+
+      if (res.ok) {
+        closeModal('eventModal');
+        showToast(result.message || 'Event saved successfully.');
+        loadEvents();
+      } else {
+        alert(result.error || 'Failed to save event.');
+      }
+    }
+
+    async function archiveEvent(eventId) {
+      if (!confirm('Are you sure you want to archive this event? Registrations will remain safe in the database.')) return;
+      const res = await fetch(`/api/admin/events/${eventId}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Event archived successfully.');
+        loadEvents();
+      }
+    }
+
+    // ==========================================================================
+    // Registrations Management
+    // ==========================================================================
+    let cachedRegistrations = [];
+
+    function debounceRegSearch() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        currentRegPage = 1;
+        loadRegistrations();
+      }, 350);
+    }
+
+    async function loadRegistrations() {
+      const search = document.getElementById('regSearchInput').value.trim();
+      const event_id = document.getElementById('regEventFilter').value;
+      const department = document.getElementById('regDeptFilter').value;
+      const attendance = document.getElementById('regAttendanceFilter').value;
+
+      const params = new URLSearchParams({
+        page: currentRegPage,
+        limit: 20,
+        archived: isViewingArchived ? 'true' : 'false'
+      });
+      if (search) params.append('search', search);
+      if (event_id) params.append('event_id', event_id);
+      if (department) params.append('department', department);
+      if (attendance) params.append('attendance', attendance);
+
+      try {
+        const res = await fetch(`/api/admin/registrations?${params.toString()}`);
+        const data = await res.json();
+        cachedRegistrations = data.items || [];
+
+        // Update Pagination
+        document.getElementById('paginationInfo').textContent = `Showing page ${data.page} of ${Math.max(1, data.pages)} (${data.total} total registrations)`;
+        document.getElementById('btnPrevPage').disabled = data.page <= 1;
+        document.getElementById('btnNextPage').disabled = data.page >= data.pages;
+
+        const tbody = document.getElementById('registrationsTableBody');
+        if (!cachedRegistrations.length) {
+          tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; padding: 30px;">${isViewingArchived ? 'No archived registrations.' : 'No registrations found.'}</td></tr>`;
+          return;
+        }
+
+        const canEdit = currentUserRole !== 'Viewer';
+
+        tbody.innerHTML = cachedRegistrations.map(r => {
+          const statusBadge = `<span class="badge badge-${r.status}">${r.status}</span>`;
+          const attBadge = `<span class="badge badge-att-${r.attendance_status}" title="Click to toggle attendance" onclick="${canEdit ? `toggleAttendanceInline(${r.id}, '${r.attendance_status}')` : ''}">${r.attendance_status}</span>`;
+
+          return `
+            <tr>
+              <td><strong style="color: #f97316; font-family: monospace;">${r.reg_code}</strong></td>
+              <td><strong style="color: #fff;">${r.full_name}</strong></td>
+              <td><span style="font-family: monospace;">${r.enrollment_id}</span></td>
+              <td style="font-size: 0.8rem;">${r.department.replace('School of ', '')}</td>
+              <td style="font-size: 0.8rem;">${r.academic_year.split(' ')[0]}</td>
+              <td>
+                <div style="font-size: 0.82rem;">${r.email}</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">${r.phone}</div>
+              </td>
+              <td><strong>${r.event_name}</strong></td>
+              <td style="font-size: 0.8rem;">${r.created_at ? r.created_at.slice(0, 10) : '-'}</td>
+              <td>${statusBadge}</td>
+              <td>${attBadge}</td>
+              <td>
+                <div class="table-actions">
+                  <button type="button" class="btn-icon" title="View Full Pass" onclick="viewRegistrationModal(${r.id})">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  </button>
+                  ${canEdit ? `
+                    <button type="button" class="btn-icon" title="Edit" onclick="openEditRegModal(${r.id})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                    </button>
+                  ` : ''}
+                  ${isViewingArchived && canEdit ? `
+                    <button type="button" class="btn-icon" title="Restore" onclick="restoreRegistration(${r.id})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                    </button>
+                    ${currentUserRole === 'Super Admin' ? `
+                      <button type="button" class="btn-icon delete" title="Permanent Delete" onclick="deleteRegistrationPermanent(${r.id})">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                      </button>
+                    ` : ''}
+                  ` : (canEdit ? `
+                    <button type="button" class="btn-icon delete" title="Archive" onclick="archiveRegistration(${r.id})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  ` : '')}
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('Error loading registrations:', err);
+      }
+    }
+
+    function changeRegPage(delta) {
+      currentRegPage += delta;
+      loadRegistrations();
+    }
+
+    function toggleArchiveView() {
+      isViewingArchived = !isViewingArchived;
+      currentRegPage = 1;
+      const btn = document.getElementById('archiveToggleBtn');
+      if (isViewingArchived) {
+        btn.style.background = '#ea580c';
+        btn.style.color = '#fff';
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> View Active Records';
+      } else {
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg> View Archived';
+      }
+      loadRegistrations();
+    }
+
+    async function toggleAttendanceInline(regId, currentStatus) {
+      const nextStatus = currentStatus === 'present' ? 'absent' : (currentStatus === 'absent' ? 'pending' : 'present');
+      try {
+        const res = await fetch(`/api/admin/registrations/${regId}/attendance`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: nextStatus })
+        });
+        if (res.ok) {
+          showToast(`Attendance marked as ${nextStatus}`);
+          loadRegistrations();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function viewRegistrationModal(regId) {
+      const r = cachedRegistrations.find(item => item.id === regId);
+      if (!r) return;
+
+      document.getElementById('viewRegContent').innerHTML = `
+        <div style="background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 12px; padding: 18px; text-align: center; margin-bottom: 16px;">
+          <span style="font-size: 0.78rem; font-weight: 800; color: #fb923c; text-transform: uppercase;">Official Verified Pass</span>
+          <h2 style="margin: 4px 0 6px; color: #fff; font-size: 1.4rem;">${r.event_name}</h2>
+          <div style="font-family: monospace; font-size: 1.2rem; font-weight: 800; color: #f97316;">${r.reg_code}</div>
+        </div>
+        <p><strong>Student Name:</strong> ${r.full_name}</p>
+        <p><strong>Enrollment ID:</strong> ${r.enrollment_id}</p>
+        <p><strong>School / Discipline:</strong> ${r.department}</p>
+        <p><strong>Academic Year:</strong> ${r.academic_year}</p>
+        <p><strong>Email Address:</strong> ${r.email}</p>
+        <p><strong>Phone Number:</strong> ${r.phone}</p>
+        <p><strong>Status:</strong> ${r.status.toUpperCase()} &bull; Attendance: ${r.attendance_status.toUpperCase()}</p>
+        <p><strong>Registered At:</strong> ${r.created_at}</p>
+        ${r.additional_info ? `<p><strong>Notes / Statement:</strong> ${r.additional_info}</p>` : ''}
+      `;
+      openModal('viewRegModal');
+    }
+
+    function openManualRegModal() {
+      document.getElementById('regForm').reset();
+      document.getElementById('regEditId').value = '';
+      document.getElementById('regModalTitle').textContent = 'Add Student Registration';
+      populateEventDropdowns();
+      openModal('regModal');
+    }
+
+    function openEditRegModal(regId) {
+      const r = cachedRegistrations.find(item => item.id === regId);
+      if (!r) return;
+
+      document.getElementById('regEditId').value = r.id;
+      document.getElementById('regInputName').value = r.full_name;
+      document.getElementById('regInputRoll').value = r.enrollment_id;
+      document.getElementById('regInputDept').value = r.department;
+      document.getElementById('regInputYear').value = r.academic_year;
+      document.getElementById('regInputEmail').value = r.email;
+      document.getElementById('regInputPhone').value = r.phone;
+      document.getElementById('regInputEvent').value = r.event_id;
+      document.getElementById('regInputStatus').value = r.status;
+      document.getElementById('regInputAttendance').value = r.attendance_status;
+      document.getElementById('regInputNotes').value = r.additional_info || '';
+
+      document.getElementById('regModalTitle').textContent = 'Edit Registration';
+      openModal('regModal');
+    }
+
+    async function handleSaveRegSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('regEditId').value;
+      const payload = {
+        full_name: document.getElementById('regInputName').value.trim(),
+        enrollment_id: document.getElementById('regInputRoll').value.trim(),
+        department: document.getElementById('regInputDept').value,
+        academic_year: document.getElementById('regInputYear').value,
+        email: document.getElementById('regInputEmail').value.trim(),
+        phone: document.getElementById('regInputPhone').value.trim(),
+        event_id: document.getElementById('regInputEvent').value,
+        status: document.getElementById('regInputStatus').value,
+        attendance_status: document.getElementById('regInputAttendance').value,
+        additional_info: document.getElementById('regInputNotes').value.trim()
+      };
+
+      const url = id ? `/api/admin/registrations/${id}` : '/api/admin/registrations';
+      const method = id ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+
+      if (res.ok) {
+        closeModal('regModal');
+        showToast(result.message || 'Saved successfully.');
+        loadRegistrations();
+      } else {
+        alert(result.error || 'Failed to save registration.');
+      }
+    }
+
+    async function archiveRegistration(regId) {
+      if (!confirm('Move registration to archive? You can restore it anytime.')) return;
+      const res = await fetch(`/api/admin/registrations/${regId}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Registration archived.');
+        loadRegistrations();
+      }
+    }
+
+    async function restoreRegistration(regId) {
+      const res = await fetch(`/api/admin/registrations/${regId}/restore`, { method: 'POST' });
+      if (res.ok) {
+        showToast('Registration restored.');
+        loadRegistrations();
+      }
+    }
+
+    async function deleteRegistrationPermanent(regId) {
+      if (!confirm('PERMANENT ACTION: Are you sure you want to permanently delete this registration record? This cannot be undone.')) return;
+      const res = await fetch(`/api/admin/registrations/${regId}?permanent=true`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Record permanently deleted.');
+        loadRegistrations();
+      }
+    }
+
+    function exportData(format) {
+      const event_id = document.getElementById('regEventFilter').value;
+      const department = document.getElementById('regDeptFilter').value;
+      const attendance = document.getElementById('regAttendanceFilter').value;
+
+      const params = new URLSearchParams();
+      if (event_id) params.append('event_id', event_id);
+      if (department) params.append('department', department);
+      if (attendance) params.append('attendance', attendance);
+
+      window.location.href = `/api/admin/export/${format}?${params.toString()}`;
+    }
+
+    // ==========================================================================
+    // Event-Specific Drill-Down Dashboard (Requirement 8)
+    // ==========================================================================
+    function initEventDrilldown() {
+      populateEventDropdowns();
+      const select = document.getElementById('drilldownEventSelect');
+      if (select.options.length > 1 && !select.value) {
+        select.selectedIndex = 1;
+        loadEventDrilldown();
+      }
+    }
+
+    function openEventDrilldownDirect(eventId) {
+      switchTab('tab-event-drilldown');
+      const select = document.getElementById('drilldownEventSelect');
+      select.value = eventId;
+      loadEventDrilldown();
+    }
+
+    async function loadEventDrilldown() {
+      const eventId = document.getElementById('drilldownEventSelect').value;
+      if (!eventId) {
+        document.getElementById('drilldownContent').style.display = 'none';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/admin/analytics/event/${eventId}`);
+        const data = await res.json();
+        if (!res.ok) return;
+
+        document.getElementById('drilldownContent').style.display = 'block';
+        const ev = data.event;
+        const k = data.kpis;
+
+        document.getElementById('drilldownTitle').textContent = ev.title;
+        document.getElementById('drilldownCategory').textContent = ev.category;
+        document.getElementById('drilldownDesc').textContent = ev.description || 'No description provided.';
+        document.getElementById('drilldownVenue').innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> <span>${ev.venue}</span>`;
+        document.getElementById('drilldownDateTime').innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <span>${ev.event_date} | ${ev.event_time}</span>`;
+
+        document.getElementById('drilldownTotal').textContent = k.total_registered;
+        document.getElementById('drilldownCapacityMeter').textContent = ev.capacity > 0 ? `Capacity: ${ev.capacity} (${k.capacity_percentage || 0}%)` : 'Capacity: Unlimited';
+        document.getElementById('drilldownPresent').textContent = k.present;
+        document.getElementById('drilldownAttRate').textContent = `Attendance: ${k.attendance_rate}%`;
+        document.getElementById('drilldownAbsent').textContent = k.absent;
+        document.getElementById('drilldownPending').textContent = k.pending;
+
+        // Render Drilldown Charts
+        renderDrilldownCharts(data.charts);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderDrilldownCharts(charts) {
+      // Dept Chart
+      const ctxDept = document.getElementById('chartDrilldownDept').getContext('2d');
+      if (chartInstances.drillDept) chartInstances.drillDept.destroy();
+
+      chartInstances.drillDept = new Chart(ctxDept, {
+        type: 'pie',
+        data: {
+          labels: charts.departments.map(d => d.department.replace('School of ', '')),
+          datasets: [{
+            data: charts.departments.map(d => d.count),
+            backgroundColor: ['#f97316', '#0284c7', '#8b5cf6', '#f59e0b', '#10b981']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1' } } }
+        }
+      });
+
+      // Year Chart
+      const ctxYear = document.getElementById('chartDrilldownYear').getContext('2d');
+      if (chartInstances.drillYear) chartInstances.drillYear.destroy();
+
+      chartInstances.drillYear = new Chart(ctxYear, {
+        type: 'bar',
+        data: {
+          labels: charts.years.map(y => y.academic_year.split(' ')[0]),
+          datasets: [{
+            label: 'Attendees',
+            data: charts.years.map(y => y.count),
+            backgroundColor: '#0284c7',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#94a3b8' } },
+            y: { ticks: { color: '#94a3b8', stepSize: 1 } }
+          }
+        }
+      });
+    }
+
+    function viewEventFilteredRegistrations() {
+      const eventId = document.getElementById('drilldownEventSelect').value;
+      if (!eventId) return;
+      switchTab('tab-registrations');
+      document.getElementById('regEventFilter').value = eventId;
+      loadRegistrations();
+    }
+
+    // ==========================================================================
+    // Student Directory & History (Requirement 12)
+    // ==========================================================================
+    let cachedStudents = [];
+
+    function debounceStudentSearch() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(loadStudents, 350);
+    }
+
+    async function loadStudents() {
+      const query = document.getElementById('studentSearchInput').value.trim();
+      try {
+        const res = await fetch(`/api/admin/students?search=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        cachedStudents = data.students || [];
+
+        document.getElementById('studentTotalCount').textContent = `Total Students: ${data.total || 0}`;
+        const tbody = document.getElementById('studentsTableBody');
+
+        if (!cachedStudents.length) {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px;">No student records found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = cachedStudents.map(s => `
+          <tr>
+            <td><strong style="color: #f97316; font-family: monospace;">${s.enrollment_id}</strong></td>
+            <td><strong style="color: #fff;">${s.full_name}</strong></td>
+            <td>${s.department}</td>
+            <td>${s.academic_year}</td>
+            <td>
+              <div>${s.email}</div>
+              <small style="color: var(--text-muted);">${s.phone}</small>
+            </td>
+            <td><strong style="color: #38bdf8;">${s.total_events_registered} events</strong></td>
+            <td><strong style="color: #34d399;">${s.total_events_attended} attended</strong></td>
+            <td>
+              <button type="button" class="btn-action btn-secondary-action" style="padding: 5px 10px; font-size: 0.78rem;" onclick="openStudentHistoryModal(${s.id})">
+                View History &rarr;
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function openStudentHistoryModal(studentId) {
+      try {
+        const res = await fetch(`/api/admin/students/${studentId}`);
+        const data = await res.json();
+        if (!res.ok) return;
+
+        const st = data.student;
+        document.getElementById('studentHistoryTitle').textContent = `Student Profile: ${st.full_name}`;
+        document.getElementById('studentHistorySummary').innerHTML = `
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.88rem;">
+            <div><strong>Enrollment:</strong> ${st.enrollment_id}</div>
+            <div><strong>School:</strong> ${st.department}</div>
+            <div><strong>Year:</strong> ${st.academic_year}</div>
+            <div><strong>Email:</strong> ${st.email}</div>
+            <div><strong>Phone:</strong> ${st.phone}</div>
+            <div><strong>Participation:</strong> <span style="color: #34d399; font-weight: 800;">${data.total_attended} of ${data.total_registered} events attended</span></div>
+          </div>
+        `;
+
+        const tbody = document.getElementById('studentHistoryTableBody');
+        tbody.innerHTML = data.history.map(h => `
+          <tr>
+            <td><strong style="color: #f97316; font-family: monospace;">${h.reg_code}</strong></td>
+            <td><strong>${h.event_name}</strong></td>
+            <td>${h.event_date || '-'}</td>
+            <td><span class="badge badge-${h.status}">${h.status}</span></td>
+            <td><span class="badge badge-att-${h.attendance_status}">${h.attendance_status}</span></td>
+          </tr>
+        `).join('');
+
+        openModal('studentHistoryModal');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // ==========================================================================
+    // Attendance Kiosk
+    // ==========================================================================
+    function initAttendanceKiosk() {
+      populateEventDropdowns();
+      const select = document.getElementById('kioskEventSelect');
+      if (select.options.length > 1 && !select.value) {
+        select.selectedIndex = 1;
+      }
+    }
+
+    async function handleKioskSearch() {
+      const eventId = document.getElementById('kioskEventSelect').value;
+      const query = document.getElementById('kioskSearchInput').value.trim();
+      const resultBox = document.getElementById('kioskResult');
+
+      if (!eventId) {
+        alert('Please select the event you are checking students into.');
+        return;
+      }
+      if (!query) return;
+
+      try {
+        const res = await fetch(`/api/admin/registrations?event_id=${eventId}&search=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        const items = data.items || [];
+
+        if (!items.length) {
+          resultBox.style.display = 'block';
+          resultBox.innerHTML = `<div style="text-align: center; color: #f87171; padding: 14px;">No matching registration found for query "${query}" in this event.</div>`;
+          return;
+        }
+
+        const r = items[0];
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <span class="badge" style="background: rgba(249, 115, 22, 0.2); color: #fb923c; margin-bottom: 6px;">${r.reg_code}</span>
+              <h3 style="color: #fff; font-size: 1.3rem; margin: 4px 0;">${r.full_name}</h3>
+              <p style="color: var(--text-sub); font-size: 0.88rem;">Enrollment: <strong>${r.enrollment_id}</strong> &bull; ${r.department} (${r.academic_year})</p>
+              <p style="font-size: 0.82rem; color: var(--text-muted);">Current Status: <span class="badge badge-att-${r.attendance_status}">${r.attendance_status.toUpperCase()}</span></p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn-action" style="background: #10b981; color: #fff; padding: 12px 20px; font-size: 1rem; display: inline-flex; align-items: center; gap: 6px;" onclick="kioskMark(${r.id}, 'present')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Mark Present
+              </button>
+              <button type="button" class="btn-action" style="background: #ef4444; color: #fff; padding: 12px 20px; font-size: 1rem; display: inline-flex; align-items: center; gap: 6px;" onclick="kioskMark(${r.id}, 'absent')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Mark Absent
+              </button>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function kioskMark(regId, status) {
+      try {
+        const res = await fetch(`/api/admin/registrations/${regId}/attendance`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: status })
+        });
+        if (res.ok) {
+          showToast(`Student checked in as ${status}!`);
+          document.getElementById('kioskSearchInput').value = '';
+          document.getElementById('kioskResult').style.display = 'none';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // ==========================================================================
+    // Activity Logs
+    // ==========================================================================
+    function debounceLogSearch() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(loadLogs, 350);
+    }
+
+    async function loadLogs() {
+      const search = document.getElementById('logSearchInput').value.trim();
+      try {
+        const res = await fetch(`/api/admin/activity-logs?search=${encodeURIComponent(search)}`);
+        const data = await res.json();
+        const logs = data.logs || [];
+
+        const tbody = document.getElementById('logsTableBody');
+        if (!logs.length) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 30px;">No audit records recorded.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = logs.map(l => `
+          <tr>
+            <td style="font-size: 0.8rem; color: var(--text-muted);">${l.timestamp}</td>
+            <td><strong style="color: #fb923c;">${l.admin_name}</strong></td>
+            <td><span class="badge" style="background: rgba(255,255,255,0.08); color: #cbd5e1;">${l.action}</span></td>
+            <td>${l.record_type}</td>
+            <td style="font-size: 0.85rem; color: #cbd5e1;">${l.details || '-'}</td>
+            <td style="font-size: 0.78rem; font-family: monospace; color: var(--text-muted);">${l.ip_address || '-'}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // ==========================================================================
+    // Settings, Change Password & Admin User Management
+    // ==========================================================================
+    async function handleChangePasswordSubmit(e) {
+      e.preventDefault();
+      const current_password = document.getElementById('currentPass').value;
+      const new_password = document.getElementById('newPass').value;
+
+      try {
+        const res = await fetch('/api/admin/change-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ current_password, new_password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Password changed successfully.');
+          document.getElementById('currentPass').value = '';
+          document.getElementById('newPass').value = '';
+        } else {
+          alert(data.error || 'Password update failed.');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function handleSeedDemo() {
+      if (!confirm('Load realistic demo students and event registrations into the database?')) return;
+      const res = await fetch('/api/admin/seed-demo', { method: 'POST' });
+      if (res.ok) {
+        showToast('Demo data seeded successfully!');
+        loadAnalyticsOverview();
+      }
+    }
+
+    async function handleClearDemo() {
+      if (!confirm('Clear all demo registrations from the database? Real registrations will be kept.')) return;
+      const res = await fetch('/api/admin/clear-demo', { method: 'POST' });
+      if (res.ok) {
+        showToast('Demo data cleared.');
+        loadAnalyticsOverview();
+      }
+    }
+
+    // Super Admin user management
+    async function loadAdminUsers() {
+      try {
+        const res = await fetch('/api/admin/users');
+        const data = await res.json();
+        const users = data.users || [];
+        const tbody = document.getElementById('adminUsersTableBody');
+
+        tbody.innerHTML = users.map(u => `
+          <tr>
+            <td><strong style="color: #fff;">${u.username}</strong></td>
+            <td>${u.full_name}</td>
+            <td>${u.email}</td>
+            <td><span class="admin-role-badge ${u.role === 'Super Admin' ? 'role-super' : (u.role === 'Admin' ? 'role-admin' : 'role-viewer')}">${u.role}</span></td>
+            <td>${u.is_active ? '<span style="color: #34d399;">Active</span>' : '<span style="color: #f87171;">Disabled</span>'}</td>
+            <td style="font-size: 0.8rem; color: var(--text-muted);">${u.last_login || 'Never'}</td>
+            <td>
+              ${u.username !== 'admin' ? `
+                <button type="button" class="btn-icon delete" title="Delete User" onclick="deleteAdminUser(${u.id})">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+              ` : '<span style="color: var(--text-muted); font-size: 0.78rem;">Primary</span>'}
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function openCreateAdminModal() {
+      openModal('adminUserModal');
+    }
+
+    async function handleCreateAdminSubmit(e) {
+      e.preventDefault();
+      const payload = {
+        username: document.getElementById('newAdminUser').value.trim(),
+        full_name: document.getElementById('newAdminName').value.trim(),
+        email: document.getElementById('newAdminEmail').value.trim(),
+        role: document.getElementById('newAdminRole').value,
+        password: document.getElementById('newAdminPass').value
+      };
+
+      const res = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        closeModal('adminUserModal');
+        showToast('Administrator created.');
+        loadAdminUsers();
+      } else {
+        alert(data.error || 'Failed to create admin.');
+      }
+    }
+
+    async function deleteAdminUser(userId) {
+      if (!confirm('Are you sure you want to remove this administrator account?')) return;
+      const res = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Administrator deleted.');
+        loadAdminUsers();
+      }
+    }
+
+    // Logout
+    async function handleAdminLogout() {
+      if (!confirm('Are you sure you want to log out of the Phoenix Club Admin Portal?')) return;
+      await fetch('/api/admin/logout', { method: 'POST' });
+      window.location.href = '/admin/login';
+    }
+
+    // Initialize Dashboard on Page Load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAnalyticsOverview();
+      loadEvents();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
+  <rect width="240" height="80" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <circle cx="48" cy="40" r="18" fill="#1e3a8a" opacity="0.12"/>
+  <path d="M38 32 L48 48 L58 32" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="78" y="46" font-family="'Manrope', -apple-system, sans-serif" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="1.5">VANTAGE</text>
+  <text x="79" y="58" font-family="'Manrope', -apple-system, sans-serif" font-size="9" font-weight="600" fill="#64748b" letter-spacing="2">BIO-SCIENCES</text>
+</svg>
