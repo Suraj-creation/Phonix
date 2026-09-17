@@ -1,0 +1,30 @@
+# Vercel serves the repo root as the static site, so anything not meant to be
+# publicly downloadable must be kept out of the deployment entirely.
+
+# Database — contains admin password hashes and student PII. Never deploy.
+*.db
+phoenix_club.db
+
+# Self-hosted backends. Vercel only runs the functions in api/.
+app.py
+auth.py
+db.py
+sheets_sync.py
+server.ts
+sheetsSync.ts
+__pycache__/
+requirements.txt
+
+# Admin portal templates (server-rendered; no server on Vercel)
+templates/
+
+# Apps Script source — belongs in the Google Sheet, not on the web
+google-sheets-webapp.gs
+
+# Build output and local state
+dist/
+sheets_sync_failed.jsonl
+.env*
+
+# Docs
+*.md
